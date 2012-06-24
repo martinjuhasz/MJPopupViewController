@@ -14,12 +14,15 @@ Also you need to add the QuarzCore-Framework to your project.
 ## Usage
 
 First you have to import the category
+
 	#import "UIViewController+MJPopupViewController.h"
 	
 then simply use `presentPopupViewController:animationType`, f.e.:
+	
 	[self presentPopupViewController:detailViewController animationType:MJPopupViewAnimationFade];
 	
 to dismiss the popup, use `dismissPopupViewControllerWithanimationType`
+	
 	[self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 	
 see the demo for more detailed examples
