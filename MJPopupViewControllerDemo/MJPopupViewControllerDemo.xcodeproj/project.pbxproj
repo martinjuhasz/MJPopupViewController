@@ -1,0 +1,352 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7A1869691597900300526B20 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A1869681597900300526B20 /* UIKit.framework */; };
+		7A18696B1597900300526B20 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A18696A1597900300526B20 /* Foundation.framework */; };
+		7A18696D1597900300526B20 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A18696C1597900300526B20 /* CoreGraphics.framework */; };
+		7A1869731597900300526B20 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A1869711597900300526B20 /* InfoPlist.strings */; };
+		7A1869751597900300526B20 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1869741597900300526B20 /* main.m */; };
+		7A1869791597900300526B20 /* MJAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1869781597900300526B20 /* MJAppDelegate.m */; };
+		7A18697C1597900300526B20 /* MJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A18697B1597900300526B20 /* MJViewController.m */; };
+		7A18697F1597900300526B20 /* MJViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A18697D1597900300526B20 /* MJViewController.xib */; };
+		7A469E131597903B00BA5F2E /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A469E101597903B00BA5F2E /* MJPopupBackgroundView.m */; };
+		7A469E141597903B00BA5F2E /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A469E121597903B00BA5F2E /* UIViewController+MJPopupViewController.m */; };
+		7A469E19159790A000BA5F2E /* MJDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A469E17159790A000BA5F2E /* MJDetailViewController.m */; };
+		7A469E1A159790A000BA5F2E /* MJDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A469E18159790A000BA5F2E /* MJDetailViewController.xib */; };
+		7A469E1C1597914000BA5F2E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A469E1B1597914000BA5F2E /* QuartzCore.framework */; };
+		7A469E21159793BE00BA5F2E /* MJSecondDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A469E1F159793BE00BA5F2E /* MJSecondDetailViewController.m */; };
+		7A469E22159793BE00BA5F2E /* MJSecondDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A469E20159793BE00BA5F2E /* MJSecondDetailViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7A1869641597900300526B20 /* MJPopupViewControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MJPopupViewControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A1869681597900300526B20 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7A18696A1597900300526B20 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7A18696C1597900300526B20 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7A1869701597900300526B20 /* MJPopupViewControllerDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MJPopupViewControllerDemo-Info.plist"; sourceTree = "<group>"; };
+		7A1869721597900300526B20 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7A1869741597900300526B20 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7A1869761597900300526B20 /* MJPopupViewControllerDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MJPopupViewControllerDemo-Prefix.pch"; sourceTree = "<group>"; };
+		7A1869771597900300526B20 /* MJAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJAppDelegate.h; sourceTree = "<group>"; };
+		7A1869781597900300526B20 /* MJAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJAppDelegate.m; sourceTree = "<group>"; };
+		7A18697A1597900300526B20 /* MJViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJViewController.h; sourceTree = "<group>"; };
+		7A18697B1597900300526B20 /* MJViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJViewController.m; sourceTree = "<group>"; };
+		7A18697E1597900300526B20 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MJViewController.xib; sourceTree = "<group>"; };
+		7A469E0F1597903B00BA5F2E /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPopupBackgroundView.h; sourceTree = "<group>"; };
+		7A469E101597903B00BA5F2E /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPopupBackgroundView.m; sourceTree = "<group>"; };
+		7A469E111597903B00BA5F2E /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
+		7A469E121597903B00BA5F2E /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
+		7A469E16159790A000BA5F2E /* MJDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJDetailViewController.h; sourceTree = "<group>"; };
+		7A469E17159790A000BA5F2E /* MJDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJDetailViewController.m; sourceTree = "<group>"; };
+		7A469E18159790A000BA5F2E /* MJDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJDetailViewController.xib; sourceTree = "<group>"; };
+		7A469E1B1597914000BA5F2E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7A469E1E159793BE00BA5F2E /* MJSecondDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJSecondDetailViewController.h; sourceTree = "<group>"; };
+		7A469E1F159793BE00BA5F2E /* MJSecondDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJSecondDetailViewController.m; sourceTree = "<group>"; };
+		7A469E20159793BE00BA5F2E /* MJSecondDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJSecondDetailViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7A1869611597900300526B20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A469E1C1597914000BA5F2E /* QuartzCore.framework in Frameworks */,
+				7A1869691597900300526B20 /* UIKit.framework in Frameworks */,
+				7A18696B1597900300526B20 /* Foundation.framework in Frameworks */,
+				7A18696D1597900300526B20 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7A1869591597900300526B20 = {
+			isa = PBXGroup;
+			children = (
+				7A18696E1597900300526B20 /* MJPopupViewControllerDemo */,
+				7A1869671597900300526B20 /* Frameworks */,
+				7A1869651597900300526B20 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7A1869651597900300526B20 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7A1869641597900300526B20 /* MJPopupViewControllerDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7A1869671597900300526B20 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7A469E1B1597914000BA5F2E /* QuartzCore.framework */,
+				7A1869681597900300526B20 /* UIKit.framework */,
+				7A18696A1597900300526B20 /* Foundation.framework */,
+				7A18696C1597900300526B20 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7A18696E1597900300526B20 /* MJPopupViewControllerDemo */ = {
+			isa = PBXGroup;
+			children = (
+				7A469E0E1597903B00BA5F2E /* Source */,
+				7A469E1D159793B100BA5F2E /* RootViewController */,
+				7A469E23159793D500BA5F2E /* DetailViewController */,
+				7A469E24159793E500BA5F2E /* SecondDetailViewController */,
+				7A1869771597900300526B20 /* MJAppDelegate.h */,
+				7A1869781597900300526B20 /* MJAppDelegate.m */,
+				7A18696F1597900300526B20 /* Supporting Files */,
+			);
+			path = MJPopupViewControllerDemo;
+			sourceTree = "<group>";
+		};
+		7A18696F1597900300526B20 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7A1869701597900300526B20 /* MJPopupViewControllerDemo-Info.plist */,
+				7A1869711597900300526B20 /* InfoPlist.strings */,
+				7A1869741597900300526B20 /* main.m */,
+				7A1869761597900300526B20 /* MJPopupViewControllerDemo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7A469E0E1597903B00BA5F2E /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				7A469E0F1597903B00BA5F2E /* MJPopupBackgroundView.h */,
+				7A469E101597903B00BA5F2E /* MJPopupBackgroundView.m */,
+				7A469E111597903B00BA5F2E /* UIViewController+MJPopupViewController.h */,
+				7A469E121597903B00BA5F2E /* UIViewController+MJPopupViewController.m */,
+			);
+			name = Source;
+			path = ../../Source;
+			sourceTree = "<group>";
+		};
+		7A469E1D159793B100BA5F2E /* RootViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7A18697A1597900300526B20 /* MJViewController.h */,
+				7A18697B1597900300526B20 /* MJViewController.m */,
+				7A18697D1597900300526B20 /* MJViewController.xib */,
+			);
+			name = RootViewController;
+			sourceTree = "<group>";
+		};
+		7A469E23159793D500BA5F2E /* DetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7A469E16159790A000BA5F2E /* MJDetailViewController.h */,
+				7A469E17159790A000BA5F2E /* MJDetailViewController.m */,
+				7A469E18159790A000BA5F2E /* MJDetailViewController.xib */,
+			);
+			name = DetailViewController;
+			sourceTree = "<group>";
+		};
+		7A469E24159793E500BA5F2E /* SecondDetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7A469E1E159793BE00BA5F2E /* MJSecondDetailViewController.h */,
+				7A469E1F159793BE00BA5F2E /* MJSecondDetailViewController.m */,
+				7A469E20159793BE00BA5F2E /* MJSecondDetailViewController.xib */,
+			);
+			name = SecondDetailViewController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7A1869631597900300526B20 /* MJPopupViewControllerDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A1869821597900300526B20 /* Build configuration list for PBXNativeTarget "MJPopupViewControllerDemo" */;
+			buildPhases = (
+				7A1869601597900300526B20 /* Sources */,
+				7A1869611597900300526B20 /* Frameworks */,
+				7A1869621597900300526B20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MJPopupViewControllerDemo;
+			productName = MJPopupViewControllerDemo;
+			productReference = 7A1869641597900300526B20 /* MJPopupViewControllerDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7A18695B1597900300526B20 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = MJ;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 7A18695E1597900300526B20 /* Build configuration list for PBXProject "MJPopupViewControllerDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7A1869591597900300526B20;
+			productRefGroup = 7A1869651597900300526B20 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7A1869631597900300526B20 /* MJPopupViewControllerDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7A1869621597900300526B20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A1869731597900300526B20 /* InfoPlist.strings in Resources */,
+				7A18697F1597900300526B20 /* MJViewController.xib in Resources */,
+				7A469E1A159790A000BA5F2E /* MJDetailViewController.xib in Resources */,
+				7A469E22159793BE00BA5F2E /* MJSecondDetailViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7A1869601597900300526B20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A1869751597900300526B20 /* main.m in Sources */,
+				7A1869791597900300526B20 /* MJAppDelegate.m in Sources */,
+				7A18697C1597900300526B20 /* MJViewController.m in Sources */,
+				7A469E131597903B00BA5F2E /* MJPopupBackgroundView.m in Sources */,
+				7A469E141597903B00BA5F2E /* UIViewController+MJPopupViewController.m in Sources */,
+				7A469E19159790A000BA5F2E /* MJDetailViewController.m in Sources */,
+				7A469E21159793BE00BA5F2E /* MJSecondDetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7A1869711597900300526B20 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7A1869721597900300526B20 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7A18697D1597900300526B20 /* MJViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7A18697E1597900300526B20 /* en */,
+			);
+			name = MJViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7A1869801597900300526B20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7A1869811597900300526B20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7A1869831597900300526B20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MJPopupViewControllerDemo/MJPopupViewControllerDemo-Prefix.pch";
+				INFOPLIST_FILE = "MJPopupViewControllerDemo/MJPopupViewControllerDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7A1869841597900300526B20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MJPopupViewControllerDemo/MJPopupViewControllerDemo-Prefix.pch";
+				INFOPLIST_FILE = "MJPopupViewControllerDemo/MJPopupViewControllerDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7A18695E1597900300526B20 /* Build configuration list for PBXProject "MJPopupViewControllerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A1869801597900300526B20 /* Debug */,
+				7A1869811597900300526B20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A1869821597900300526B20 /* Build configuration list for PBXNativeTarget "MJPopupViewControllerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A1869831597900300526B20 /* Debug */,
+				7A1869841597900300526B20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7A18695B1597900300526B20 /* Project object */;
+}
