@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>MJPopupViewControllerDemo copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>MJPopupViewControllerDemo.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,21 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>5545EDFE15A43C0600657246</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>55EAD54615A43C5E004D3846</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>55FC85A115A43BD1007B0661</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>7A1869631597900300526B20</key>
 		<dict>
 			<key>primary</key>
