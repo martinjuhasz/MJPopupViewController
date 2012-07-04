@@ -59,7 +59,11 @@
     [self presentPopupViewController:detailViewController animationType:MJPopupViewAnimationSlideRightLeft];
 }
 
-
+- (IBAction)slideInLeftRight:(id)sender
+{
+    MJDetailViewController *detailViewController = [[MJDetailViewController alloc] initWithNibName:@"MJDetailViewController" bundle:nil];
+    [self presentPopupViewController:detailViewController animationType:MJPopupViewAnimationSlideLeftRight];
+}
 
 // This is just a sample how you could use a popup when you need some userinteraction in it. Use a ivar so it gets not dealloced after fade in
 - (IBAction)popupWithUserInteraction:(id)sender

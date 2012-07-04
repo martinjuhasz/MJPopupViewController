@@ -40,10 +40,17 @@
     UIView *popupView = [sourceView viewWithTag:kMJPopupViewTag];
     UIView *overlayView = [sourceView viewWithTag:kMJOverlayViewTag];
     
-    if(animationType == MJPopupViewAnimationSlideBottomTop || animationType == MJPopupViewAnimationSlideBottomBottom || animationType == MJPopupViewAnimationSlideRightLeft) {
-        [self slideViewOut:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
-    } else {
-        [self fadeViewOut:popupView sourceView:sourceView overlayView:overlayView];
+    switch (animationType) {
+        case MJPopupViewAnimationSlideBottomTop:
+        case MJPopupViewAnimationSlideBottomBottom:
+        case MJPopupViewAnimationSlideRightLeft:
+        case MJPopupViewAnimationSlideLeftRight:
+            [self slideViewOut:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
+            break;
+            
+        default:
+            [self fadeViewOut:popupView sourceView:sourceView overlayView:overlayView];
+            break;
     }
 }
 
@@ -91,19 +98,20 @@
     popupView.alpha = 0.0f;
     [overlayView addSubview:popupView];
     [sourceView addSubview:overlayView];
-    
-    if(animationType == MJPopupViewAnimationSlideBottomTop) {
-        [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimationTypeSlideBottomTop) forControlEvents:UIControlEventTouchUpInside];
-        [self slideViewIn:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
-    } else if (animationType == MJPopupViewAnimationSlideRightLeft) {
-        [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimationTypeSlideRightLeft) forControlEvents:UIControlEventTouchUpInside];
-        [self slideViewIn:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
-    } else if (animationType == MJPopupViewAnimationSlideBottomBottom) {
-        [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimationTypeSlideBottomBottom) forControlEvents:UIControlEventTouchUpInside];
-        [self slideViewIn:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
-    } else {
-        [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimationTypeFade) forControlEvents:UIControlEventTouchUpInside];
-        [self fadeViewIn:popupView sourceView:sourceView overlayView:overlayView];
+
+    [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
+    switch (animationType) {
+        case MJPopupViewAnimationSlideBottomTop:
+        case MJPopupViewAnimationSlideBottomBottom:
+        case MJPopupViewAnimationSlideRightLeft:
+        case MJPopupViewAnimationSlideLeftRight:
+            dismissButton.tag = animationType;
+            [self slideViewIn:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
+            break;
+        default:
+            dismissButton.tag = MJPopupViewAnimationFade;
+            [self fadeViewIn:popupView sourceView:sourceView overlayView:overlayView];
+            break;
     }    
 }
 
@@ -116,28 +124,25 @@
     return recentView.view;
 }
 
-// TODO: find a better way to do this, thats horrible
-- (void)dismissPopupViewControllerWithanimationTypeSlideBottomTop
+- (void)dismissPopupViewControllerWithanimation:(id)sender
 {
-    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideBottomTop];
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton* dismissButton = sender;
+        switch (dismissButton.tag) {
+            case MJPopupViewAnimationSlideBottomTop:
+            case MJPopupViewAnimationSlideBottomBottom:
+            case MJPopupViewAnimationSlideRightLeft:
+            case MJPopupViewAnimationSlideLeftRight:
+                [self dismissPopupViewControllerWithanimationType:dismissButton.tag];
+                break;
+            default:
+                [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+                break;
+        }
+    } else {
+        [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+    }
 }
-
-- (void)dismissPopupViewControllerWithanimationTypeSlideBottomBottom
-{
-    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideBottomBottom];
-}
-
-- (void)dismissPopupViewControllerWithanimationTypeSlideRightLeft
-{
-    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideRightLeft];
-}
-
-- (void)dismissPopupViewControllerWithanimationTypeFade
-{
-    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
-}
-
-
 
 //////////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -152,17 +157,29 @@
     CGSize sourceSize = sourceView.bounds.size;
     CGSize popupSize = popupView.bounds.size;
     CGRect popupStartRect;
-    if(animationType == MJPopupViewAnimationSlideBottomTop || animationType == MJPopupViewAnimationSlideBottomBottom) {
-        popupStartRect = CGRectMake((sourceSize.width - popupSize.width) / 2, 
-                                    sourceSize.height, 
-                                    popupSize.width, 
-                                    popupSize.height);
-    } else {
-        popupStartRect = CGRectMake(sourceSize.width, 
-                                    (sourceSize.height - popupSize.height) / 2,
-                                    popupSize.width, 
-                                    popupSize.height);
-    }
+    switch (animationType) {
+        case MJPopupViewAnimationSlideBottomTop:
+        case MJPopupViewAnimationSlideBottomBottom:
+            popupStartRect = CGRectMake((sourceSize.width - popupSize.width) / 2, 
+                                        sourceSize.height, 
+                                        popupSize.width, 
+                                        popupSize.height);
+
+            break;
+        case MJPopupViewAnimationSlideLeftRight:
+            popupStartRect = CGRectMake(-sourceSize.width, 
+                                        (sourceSize.height - popupSize.height) / 2,
+                                        popupSize.width, 
+                                        popupSize.height);
+            break;
+            
+        default:
+            popupStartRect = CGRectMake(sourceSize.width, 
+                                        (sourceSize.height - popupSize.height) / 2,
+                                        popupSize.width, 
+                                        popupSize.height);
+            break;
+    }        
     CGRect popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2, 
                                      (sourceSize.height - popupSize.height) / 2,
                                      popupSize.width, 
@@ -185,21 +202,31 @@
     CGSize sourceSize = sourceView.bounds.size;
     CGSize popupSize = popupView.bounds.size;
     CGRect popupEndRect;
-    if(animationType == MJPopupViewAnimationSlideBottomTop) {
-        popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2, 
-                                  -popupSize.height, 
-                                  popupSize.width, 
-                                  popupSize.height);
-    } else if(animationType == MJPopupViewAnimationSlideBottomBottom) {
-        popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2, 
-                                  sourceSize.height, 
-                                  popupSize.width, 
-                                  popupSize.height);
-    } else {
-        popupEndRect = CGRectMake(-popupSize.width, 
-                                  popupView.frame.origin.y, 
-                                  popupSize.width, 
-                                  popupSize.height);
+    switch (animationType) {
+        case MJPopupViewAnimationSlideBottomTop:
+            popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2, 
+                                      -popupSize.height, 
+                                      popupSize.width, 
+                                      popupSize.height);
+            break;
+        case MJPopupViewAnimationSlideBottomBottom:
+            popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2, 
+                                      sourceSize.height, 
+                                      popupSize.width, 
+                                      popupSize.height);
+            break;
+        case MJPopupViewAnimationSlideLeftRight:
+            popupEndRect = CGRectMake(sourceSize.width, 
+                                      popupView.frame.origin.y, 
+                                      popupSize.width, 
+                                      popupSize.height);
+            break;
+        default:
+            popupEndRect = CGRectMake(-popupSize.width, 
+                                      popupView.frame.origin.y, 
+                                      popupSize.width, 
+                                      popupSize.height);
+            break;
     }
     
     [UIView animateWithDuration:kPopupModalAnimationDuration delay:0.0f options:UIViewAnimationCurveEaseIn animations:^{
