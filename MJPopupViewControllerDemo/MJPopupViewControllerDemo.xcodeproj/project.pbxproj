@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		552BB71115A4407F0024804A /* MJViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552BB71315A4407F0024804A /* MJViewController~ipad.xib */; };
 		7A1869691597900300526B20 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A1869681597900300526B20 /* UIKit.framework */; };
 		7A18696B1597900300526B20 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A18696A1597900300526B20 /* Foundation.framework */; };
 		7A18696D1597900300526B20 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A18696C1597900300526B20 /* CoreGraphics.framework */; };
@@ -15,7 +14,7 @@
 		7A1869751597900300526B20 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1869741597900300526B20 /* main.m */; };
 		7A1869791597900300526B20 /* MJAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1869781597900300526B20 /* MJAppDelegate.m */; };
 		7A18697C1597900300526B20 /* MJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A18697B1597900300526B20 /* MJViewController.m */; };
-		7A18697F1597900300526B20 /* MJViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A18697D1597900300526B20 /* MJViewController~iphone.xib */; };
+		7A18697F1597900300526B20 /* MJViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A18697D1597900300526B20 /* MJViewController.xib */; };
 		7A469E131597903B00BA5F2E /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A469E101597903B00BA5F2E /* MJPopupBackgroundView.m */; };
 		7A469E141597903B00BA5F2E /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A469E121597903B00BA5F2E /* UIViewController+MJPopupViewController.m */; };
 		7A469E19159790A000BA5F2E /* MJDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A469E17159790A000BA5F2E /* MJDetailViewController.m */; };
@@ -26,7 +25,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		552BB71215A4407F0024804A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MJViewController~ipad.xib"; sourceTree = "<group>"; };
 		7A1869641597900300526B20 /* MJPopupViewControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MJPopupViewControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A1869681597900300526B20 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7A18696A1597900300526B20 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -39,7 +37,7 @@
 		7A1869781597900300526B20 /* MJAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJAppDelegate.m; sourceTree = "<group>"; };
 		7A18697A1597900300526B20 /* MJViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJViewController.h; sourceTree = "<group>"; };
 		7A18697B1597900300526B20 /* MJViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJViewController.m; sourceTree = "<group>"; };
-		7A18697E1597900300526B20 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MJViewController~iphone.xib"; sourceTree = "<group>"; };
+		7A18697E1597900300526B20 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MJViewController.xib; sourceTree = "<group>"; };
 		7A469E0F1597903B00BA5F2E /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPopupBackgroundView.h; sourceTree = "<group>"; };
 		7A469E101597903B00BA5F2E /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPopupBackgroundView.m; sourceTree = "<group>"; };
 		7A469E111597903B00BA5F2E /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
@@ -138,8 +136,7 @@
 			children = (
 				7A18697A1597900300526B20 /* MJViewController.h */,
 				7A18697B1597900300526B20 /* MJViewController.m */,
-				7A18697D1597900300526B20 /* MJViewController~iphone.xib */,
-				552BB71315A4407F0024804A /* MJViewController~ipad.xib */,
+				7A18697D1597900300526B20 /* MJViewController.xib */,
 			);
 			name = RootViewController;
 			sourceTree = "<group>";
@@ -216,10 +213,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A1869731597900300526B20 /* InfoPlist.strings in Resources */,
-				7A18697F1597900300526B20 /* MJViewController~iphone.xib in Resources */,
+				7A18697F1597900300526B20 /* MJViewController.xib in Resources */,
 				7A469E1A159790A000BA5F2E /* MJDetailViewController.xib in Resources */,
 				7A469E22159793BE00BA5F2E /* MJSecondDetailViewController.xib in Resources */,
-				552BB71115A4407F0024804A /* MJViewController~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,14 +239,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		552BB71315A4407F0024804A /* MJViewController~ipad.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				552BB71215A4407F0024804A /* en */,
-			);
-			name = "MJViewController~ipad.xib";
-			sourceTree = "<group>";
-		};
 		7A1869711597900300526B20 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -259,12 +247,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		7A18697D1597900300526B20 /* MJViewController~iphone.xib */ = {
+		7A18697D1597900300526B20 /* MJViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				7A18697E1597900300526B20 /* en */,
 			);
-			name = "MJViewController~iphone.xib";
+			name = MJViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
