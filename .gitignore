@@ -3,3 +3,4 @@
 build/
 cuserdata
 *.xcworkspace
+.xcodeproj/ !*.xcodeproj/project.pbxproj
