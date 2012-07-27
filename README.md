@@ -28,6 +28,7 @@ to dismiss the popup, use `dismissPopupViewControllerWithanimationType`
 see the demo for more detailed examples
 
 
+
 ## Demo
 
 You can open the `MJPopupViewControllerDemo` demo project in Xcode and run it on your iPhone as well as in the Simulator.
