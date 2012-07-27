@@ -30,7 +30,7 @@ see the demo for more detailed examples
 
 ## Demo
 
-You can open the `MJPopupViewControllerDemo` demo project in XCode and run it on your iPhone as well as in the Simulator.
+You can open the `MJPopupViewControllerDemo` demo project in Xcode and run it on your iPhone as well as in the Simulator.
 
 <img src="https://raw.github.com/martinjuhasz/MJPopupViewController/master/assets/demo1.png" width="320" height="480"/>
 <img src="https://raw.github.com/martinjuhasz/MJPopupViewController/master/assets/demo2.png" width="330" height="480"/>
