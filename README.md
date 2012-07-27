@@ -8,7 +8,7 @@ Written by [Martin Juhasz](http://martinjuhasz.de), June 2012.
 ## Installation
 
 Just drop the files under `Source` into your Xcode project.
-Also you need to add the QuarzCore-Framework to your project.
+Also you need to add the QuartzCore-Framework to your project.
 
 
 ## Usage
