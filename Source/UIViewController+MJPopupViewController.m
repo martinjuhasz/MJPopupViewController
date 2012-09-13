@@ -9,8 +9,10 @@
 #import "UIViewController+MJPopupViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MJPopupBackgroundView.h"
+#import <objc/runtime.h>
 
 #define kPopupModalAnimationDuration 0.35
+#define kMJPopupViewController @"kMJPopupViewController"
 #define kMJSourceViewTag 23941
 #define kMJPopupViewTag 23942
 #define kMJBackgroundViewTag 23943
@@ -22,15 +24,23 @@
 @end
 
 
-
 ////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 #pragma mark Public
 
 @implementation UIViewController (MJPopupViewController)
 
+- (UIViewController*)popupViewController {
+    return objc_getAssociatedObject(self, kMJPopupViewController);
+}
+
+- (void)setPopupViewController:(UIViewController *)popupViewController {
+    objc_setAssociatedObject(self, kMJPopupViewController, popupViewController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType
 {
+    self.popupViewController = popupViewController;
     [self presentPopupView:popupViewController.view animationType:animationType];
 }
 
@@ -213,9 +223,11 @@
     popupView.frame = popupStartRect;
     popupView.alpha = 1.0f;
     [UIView animateWithDuration:kPopupModalAnimationDuration delay:0.0f options:UIViewAnimationCurveEaseOut animations:^{
+        [self.popupViewController viewWillAppear:NO];
         backgroundView.alpha = 1.0f;
         popupView.frame = popupEndRect;
     } completion:^(BOOL finished) {
+        [self.popupViewController viewDidAppear:NO];
     }];
 }
 
@@ -257,11 +269,14 @@
     }
     
     [UIView animateWithDuration:kPopupModalAnimationDuration delay:0.0f options:UIViewAnimationCurveEaseIn animations:^{
+        [self.popupViewController viewWillDisappear:NO];
         popupView.frame = popupEndRect;
         backgroundView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         [popupView removeFromSuperview];
         [overlayView removeFromSuperview];
+        [self.popupViewController viewDidDisappear:NO];
+        self.popupViewController = nil;
     }];
 }
 
@@ -283,9 +298,11 @@
     popupView.alpha = 0.0f;
     
     [UIView animateWithDuration:kPopupModalAnimationDuration animations:^{
+        [self.popupViewController viewWillAppear:NO];
         backgroundView.alpha = 0.5f;
         popupView.alpha = 1.0f;
     } completion:^(BOOL finished) {
+        [self.popupViewController viewDidAppear:NO];
     }];
 }
 
@@ -293,11 +310,14 @@
 {
     UIView *backgroundView = [overlayView viewWithTag:kMJBackgroundViewTag];
     [UIView animateWithDuration:kPopupModalAnimationDuration animations:^{
+        [self.popupViewController viewWillDisappear:NO];
         backgroundView.alpha = 0.0f;
         popupView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         [popupView removeFromSuperview];
         [overlayView removeFromSuperview];
+        [self.popupViewController viewDidDisappear:NO];
+        self.popupViewController = nil;
     }];
 }
 
