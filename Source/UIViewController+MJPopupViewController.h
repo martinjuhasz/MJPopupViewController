@@ -9,11 +9,15 @@
 #import <UIKit/UIKit.h>
 
 typedef enum {
+    MJPopupViewAnimationFade = 0,
     MJPopupViewAnimationSlideBottomTop = 1,
-    MJPopupViewAnimationSlideRightLeft,
-    MJPopupViewAnimationSlideLeftRight,
     MJPopupViewAnimationSlideBottomBottom,
-    MJPopupViewAnimationFade
+    MJPopupViewAnimationSlideTopTop,
+    MJPopupViewAnimationSlideTopBottom,
+    MJPopupViewAnimationSlideLeftLeft,
+    MJPopupViewAnimationSlideLeftRight,
+    MJPopupViewAnimationSlideRightLeft,
+    MJPopupViewAnimationSlideRightRight,
 } MJPopupViewAnimation;
 
 @interface UIViewController (MJPopupViewController)

@@ -43,8 +43,12 @@
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
-        case MJPopupViewAnimationSlideRightLeft:
+        case MJPopupViewAnimationSlideTopTop:
+        case MJPopupViewAnimationSlideTopBottom:
+        case MJPopupViewAnimationSlideLeftLeft:
         case MJPopupViewAnimationSlideLeftRight:
+        case MJPopupViewAnimationSlideRightLeft:
+        case MJPopupViewAnimationSlideRightRight:
             [self slideViewOut:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
             break;
             
@@ -106,8 +110,12 @@
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
-        case MJPopupViewAnimationSlideRightLeft:
+        case MJPopupViewAnimationSlideTopTop:
+        case MJPopupViewAnimationSlideTopBottom:
+        case MJPopupViewAnimationSlideLeftLeft:
         case MJPopupViewAnimationSlideLeftRight:
+        case MJPopupViewAnimationSlideRightLeft:
+        case MJPopupViewAnimationSlideRightRight:
             dismissButton.tag = animationType;
             [self slideViewIn:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
             break;
@@ -134,8 +142,12 @@
         switch (dismissButton.tag) {
             case MJPopupViewAnimationSlideBottomTop:
             case MJPopupViewAnimationSlideBottomBottom:
-            case MJPopupViewAnimationSlideRightLeft:
+            case MJPopupViewAnimationSlideTopTop:
+            case MJPopupViewAnimationSlideTopBottom:
+            case MJPopupViewAnimationSlideLeftLeft:
             case MJPopupViewAnimationSlideLeftRight:
+            case MJPopupViewAnimationSlideRightLeft:
+            case MJPopupViewAnimationSlideRightRight:
                 [self dismissPopupViewControllerWithanimationType:dismissButton.tag];
                 break;
             default:
@@ -169,10 +181,19 @@
                                         popupSize.height);
 
             break;
+        case MJPopupViewAnimationSlideLeftLeft:
         case MJPopupViewAnimationSlideLeftRight:
             popupStartRect = CGRectMake(-sourceSize.width, 
                                         (sourceSize.height - popupSize.height) / 2,
                                         popupSize.width, 
+                                        popupSize.height);
+            break;
+            
+        case MJPopupViewAnimationSlideTopTop:
+        case MJPopupViewAnimationSlideTopBottom:
+            popupStartRect = CGRectMake((sourceSize.width - popupSize.width) / 2,
+                                        -popupSize.height,
+                                        popupSize.width,
                                         popupSize.height);
             break;
             
@@ -207,19 +228,22 @@
     CGRect popupEndRect;
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
-            popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2, 
+        case MJPopupViewAnimationSlideTopTop:
+            popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2,
                                       -popupSize.height, 
                                       popupSize.width, 
                                       popupSize.height);
             break;
         case MJPopupViewAnimationSlideBottomBottom:
-            popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2, 
+        case MJPopupViewAnimationSlideTopBottom:
+            popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2,
                                       sourceSize.height, 
                                       popupSize.width, 
                                       popupSize.height);
             break;
         case MJPopupViewAnimationSlideLeftRight:
-            popupEndRect = CGRectMake(sourceSize.width, 
+        case MJPopupViewAnimationSlideRightRight:
+            popupEndRect = CGRectMake(sourceSize.width,
                                       popupView.frame.origin.y, 
                                       popupSize.width, 
                                       popupSize.height);
