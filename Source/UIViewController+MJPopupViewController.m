@@ -18,7 +18,6 @@
 
 @interface UIViewController (MJPopupViewControllerPrivate)
 - (UIView*)topView;
-- (void)presentPopupView:(UIView*)popupView;
 @end
 
 
@@ -34,7 +33,7 @@
     [self presentPopupView:popupViewController.view animationType:animationType];
 }
 
-- (void)dismissPopupViewControllerWithanimationType:(MJPopupViewAnimation)animationType
+- (void)dismissPopupViewControllerWithAnimationType:(MJPopupViewAnimation)animationType
 {
     UIView *sourceView = [self topView];
     UIView *popupView = [sourceView viewWithTag:kMJPopupViewTag];
@@ -54,6 +53,9 @@
     }
 }
 
+- (void)dismissPopupViewWithAnimationType:(MJPopupViewAnimation)animationType {
+    [self dismissPopupViewControllerWithAnimationType:animationType];
+}
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -136,14 +138,14 @@
             case MJPopupViewAnimationSlideBottomBottom:
             case MJPopupViewAnimationSlideRightLeft:
             case MJPopupViewAnimationSlideLeftRight:
-                [self dismissPopupViewControllerWithanimationType:dismissButton.tag];
+                [self dismissPopupViewControllerWithAnimationType:dismissButton.tag];
                 break;
             default:
-                [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+                [self dismissPopupViewControllerWithAnimationType:MJPopupViewAnimationFade];
                 break;
         }
     } else {
-        [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+        [self dismissPopupViewControllerWithAnimationType:MJPopupViewAnimationFade];
     }
 }
 

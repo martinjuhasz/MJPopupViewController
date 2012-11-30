@@ -58,7 +58,7 @@
 
 - (void)cancelButtonClicked:(MJSecondDetailViewController *)aSecondDetailViewController
 {
-    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+    [self dismissPopupViewControllerWithAnimationType:MJPopupViewAnimationFade];
     secondDetailViewController = nil;
 }
 
