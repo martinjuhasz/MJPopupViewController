@@ -16,12 +16,28 @@ typedef enum {
     MJPopupViewAnimationFade
 } MJPopupViewAnimation;
 
-@interface UIViewController (MJPopupViewController)
+typedef enum {
+    MJPopupViewContentInteractionNone = 1,
+    MJPopupViewContentInteractionDismiss,
+} MJPopupViewContentInteraction;
 
-- (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType;
+typedef void(^MJPopupViewStyle)(UIView *view);
+
+extern __strong MJPopupViewStyle _popupStyle;
+extern __strong UIViewController *_popupViewController;
+
+@protocol MJPopupViewDelegate <NSObject>
+- (void)didDismissPopup:(UIView *)popupView;
+@end
+
+@interface UIViewController (MJPopupViewController)
++ (void)setPopupStyle:(MJPopupViewStyle)style;
++ (UIViewController*)popupViewController;
+
+- (void)presentPopupViewController:(UIViewController*)popupViewController;
+- (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType contentInteraction:(MJPopupViewContentInteraction)contentInteraction;
+- (void)dismissPopupViewController;
 - (void)dismissPopupViewControllerWithAnimationType:(MJPopupViewAnimation)animationType;
 
-- (void)presentPopupView:(UIView*)popupView animationType:(MJPopupViewAnimation)animationType;
-- (void)dismissPopupViewWithAnimationType:(MJPopupViewAnimation)animationType;
 
 @end
