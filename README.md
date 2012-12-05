@@ -4,6 +4,10 @@ A UIViewController Category to display a ViewController as a popup with differen
 
 Written by [Martin Juhasz](http://martinjuhasz.de), June 2012.
 
+Extended by [Andreas Zeitler](http://www.azeitler.com), December 2012.
+- added better integration methods
+- added MJPopupViewController to derive popped-up controllers from (to support callbacks)
+
 
 ## Installation
 
