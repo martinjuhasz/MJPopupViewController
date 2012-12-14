@@ -12,4 +12,6 @@
 
 @property (nonatomic,readwrite,strong) UIViewController *popupParent;
 
+- (void)dismissPopupViewController;
+
 @end

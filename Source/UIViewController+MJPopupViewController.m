@@ -9,6 +9,7 @@
 #import "UIViewController+MJPopupViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MJPopupBackgroundView.h"
+#import "MJPopupViewController.h"
 
 #define kPopupModalAnimationDuration 0.35
 #define kMJSourceViewTag 23941
@@ -17,7 +18,7 @@
 #define kMJOverlayViewTag 23945
 
 __strong MJPopupViewStyle _popupStyle = nil;
-__strong UIViewController *_popupViewController = nil;
+__strong UIViewController *_topMostPopupViewController = nil;
 
 @interface UIViewController (MJPopupViewControllerPrivate)
 - (UIView*)topView;
@@ -38,8 +39,8 @@ __strong UIViewController *_popupViewController = nil;
     _popupStyle = style;
 }
 
-+ (UIViewController*)popupViewController {
-    return _popupViewController;
++ (UIViewController*)topMostPopupViewController {
+    return _topMostPopupViewController;
 }
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController {
@@ -56,15 +57,19 @@ __strong UIViewController *_popupViewController = nil;
         return;
     }
     
-    _popupViewController = popupViewController;
+    if ([popupViewController respondsToSelector:@selector(setPopupParent:)]) {
+        [(MJPopupViewController *)popupViewController setPopupParent:self];
+    }
+    
+    _topMostPopupViewController = popupViewController;
     [self presentPopupView:popupViewController.view animationType:animationType contentInteraction:contentInteraction];
 }
 
 
-- (void)dismissPopupViewController {
-    [self dismissPopupViewControllerWithAnimationType:MJPopupViewAnimationSlideBottomBottom];
+- (void)dismissPopupViewController:(UIViewController*)popupViewController {
+    [self dismissPopupViewController:popupViewController animationType:MJPopupViewAnimationSlideBottomBottom];
 }
-- (void)dismissPopupViewControllerWithAnimationType:(MJPopupViewAnimation)animationType
+- (void)dismissPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType
 {
     UIView *sourceView = [self topView];
     UIView *popupView = [sourceView viewWithTag:kMJPopupViewTag];
@@ -73,6 +78,8 @@ __strong UIViewController *_popupViewController = nil;
     if ([[self class] conformsToProtocol:@protocol(MJPopupViewDelegate)] && [self respondsToSelector:@selector(didDismissPopup:)]) {
         [self didDismissPopup:popupView];
     }
+    
+    [_topMostPopupViewController viewWillDisappear:YES];
     
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
@@ -86,11 +93,7 @@ __strong UIViewController *_popupViewController = nil;
             [self fadeViewOut:popupView sourceView:sourceView overlayView:overlayView];
             break;
     }
-    _popupViewController = nil;
-}
-
-- (void)dismissPopupViewWithAnimationType:(MJPopupViewAnimation)animationType {
-    [self dismissPopupViewControllerWithAnimationType:animationType];
+    _topMostPopupViewController = nil;
 }
 
 
@@ -99,7 +102,7 @@ __strong UIViewController *_popupViewController = nil;
 #pragma mark View Handling
 
 - (void)presentPopupView:(UIView*)popupView animationType:(MJPopupViewAnimation)animationType contentInteraction:(MJPopupViewContentInteraction)contentInteraction
-{
+{    
     UIView *sourceView = [self topView];
     sourceView.tag = kMJSourceViewTag;
     //popupView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
@@ -107,6 +110,8 @@ __strong UIViewController *_popupViewController = nil;
     
     // check if source view controller is not in destination
     if ([sourceView.subviews containsObject:popupView]) return;
+    
+    [_topMostPopupViewController viewWillAppear:YES];
     
     // customize popupView
     popupView.layer.shadowPath = [UIBezierPath bezierPathWithRect:popupView.bounds].CGPath;
@@ -134,12 +139,15 @@ __strong UIViewController *_popupViewController = nil;
     [overlayView addSubview:backgroundView];
     
     // Make the Background Clickable
-    UIButton * dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    dismissButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    dismissButton.backgroundColor = [UIColor clearColor];
-    dismissButton.frame = sourceView.bounds;
-    [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithAnimation:) forControlEvents:UIControlEventTouchUpInside];
-    [overlayView addSubview:dismissButton];
+    UIButton * dismissButton = nil;
+    if (contentInteraction != MJPopupViewContentInteractionNone) {
+        dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        dismissButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        dismissButton.backgroundColor = [UIColor clearColor];
+        dismissButton.frame = sourceView.bounds;
+        [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithAnimation:) forControlEvents:UIControlEventTouchUpInside];
+        [overlayView addSubview:dismissButton];
+    }
     
     popupView.alpha = 0.0f;
     [overlayView addSubview:popupView];
@@ -147,7 +155,7 @@ __strong UIViewController *_popupViewController = nil;
     
     // Make the Popup Clickable
     UIButton * dismissButton2 = nil;
-    if (contentInteraction == MJPopupViewContentInteractionDismiss) {
+    if (contentInteraction == MJPopupViewContentInteractionDismissEverywhere) {
         dismissButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
         dismissButton2.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         dismissButton2.backgroundColor = [UIColor clearColor];
@@ -182,26 +190,6 @@ __strong UIViewController *_popupViewController = nil;
     return recentView.view;
 }
 
-- (void)dismissPopupViewControllerWithAnimation:(id)sender
-{
-    if ([sender isKindOfClass:[UIButton class]]) {
-        UIButton* dismissButton = sender;
-        switch (dismissButton.tag) {
-            case MJPopupViewAnimationSlideBottomTop:
-            case MJPopupViewAnimationSlideBottomBottom:
-            case MJPopupViewAnimationSlideRightLeft:
-            case MJPopupViewAnimationSlideLeftRight:
-                [self dismissPopupViewControllerWithAnimationType:dismissButton.tag];
-                break;
-            default:
-                [self dismissPopupViewControllerWithAnimationType:MJPopupViewAnimationFade];
-                break;
-        }
-    } else {
-        [self dismissPopupViewControllerWithAnimationType:MJPopupViewAnimationFade];
-    }
-}
-
 //////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 #pragma mark Animations
@@ -210,6 +198,7 @@ __strong UIViewController *_popupViewController = nil;
 
 - (void)slideViewIn:(UIView*)popupView sourceView:(UIView*)sourceView overlayView:(UIView*)overlayView withAnimationType:(MJPopupViewAnimation)animationType
 {
+    __block UIViewController *backupedPopupViewController = _topMostPopupViewController;
     UIView *backgroundView = [overlayView viewWithTag:kMJBackgroundViewTag];
     // Generating Start and Stop Positions
     CGSize sourceSize = sourceView.bounds.size;
@@ -238,10 +227,10 @@ __strong UIViewController *_popupViewController = nil;
                                         popupSize.height);
             break;
     }        
-    CGRect popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2, 
+    CGRect popupEndRect = popupView.frame;/* CGRectMake((sourceSize.width - popupSize.width) / 2,
                                      (sourceSize.height - popupSize.height) / 2,
                                      popupSize.width, 
-                                     popupSize.height);
+                                     popupSize.height);*/
     
     // Set starting properties
     popupView.frame = popupStartRect;
@@ -250,6 +239,9 @@ __strong UIViewController *_popupViewController = nil;
         backgroundView.alpha = 1.0f;
         popupView.frame = popupEndRect;
     } completion:^(BOOL finished) {
+        if (finished) {
+            [backupedPopupViewController viewDidAppear:YES];
+        }
     }];
 }
 
@@ -293,6 +285,7 @@ __strong UIViewController *_popupViewController = nil;
     } completion:^(BOOL finished) {
         [popupView removeFromSuperview];
         [overlayView removeFromSuperview];
+        [_topMostPopupViewController viewDidDisappear:YES];
     }];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "MJPopupViewController.h"
+#import "UIViewController+MJPopupViewController.h"
 
 @interface MJPopupViewController ()
 
@@ -33,6 +34,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dismissPopupViewController {
+    [[self popupParent] dismissPopupViewController:self];
 }
 
 @end
