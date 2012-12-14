@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
      :type => 'unkown',
      :text => "see original author"
   }
-  s.source       = { :git => "https://github.com/azeitler/MJPopupViewController.git", :tag => '1.0.6' }
+  s.source       = { :git => "https://github.com/doPanic/MJPopupViewController.git", :tag => '1.0.6' }
   s.platform     = :ios, '5.0'
   s.source_files = 'Source/*.{h,m}'
   s.public_header_files = "Source/*.{h}"
