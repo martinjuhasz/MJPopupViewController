@@ -25,7 +25,6 @@ typedef enum {
 typedef void(^MJPopupViewStyle)(UIView *view);
 
 extern __strong MJPopupViewStyle _popupStyle;
-extern __strong UIViewController *_topMostPopupViewController;
 
 @protocol MJPopupViewDelegate <NSObject>
 - (void)didDismissPopup:(UIView *)popupView;
@@ -33,12 +32,13 @@ extern __strong UIViewController *_topMostPopupViewController;
 
 @interface UIViewController (MJPopupViewController)
 + (void)setPopupStyle:(MJPopupViewStyle)style;
-+ (UIViewController*)topMostPopupViewController;
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController;
+- (void)presentPopupViewController:(UIViewController*)popupViewController contentInteraction:(MJPopupViewContentInteraction)contentInteraction;
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType contentInteraction:(MJPopupViewContentInteraction)contentInteraction;
 - (void)dismissPopupViewController:(UIViewController*)popupViewController;
 - (void)dismissPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType;
+- (void)dismissPopupViewControllerWithSender:(UIButton *)sender;
 
 
 @end
