@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+/*! 
+ @class MJPopupBackgroundView
+ @abstract background view for popups, renders a radial black gradient 
+ */
 @interface MJPopupBackgroundView : UIView
 
 @end

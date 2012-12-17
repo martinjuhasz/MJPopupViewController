@@ -33,6 +33,7 @@ extern __strong MJPopupViewStyle _popupStyle;
 @interface UIViewController (MJPopupViewController)
 + (void)setPopupStyle:(MJPopupViewStyle)style;
 
+/*!  */
 - (void)presentPopupViewController:(UIViewController*)popupViewController;
 - (void)presentPopupViewController:(UIViewController*)popupViewController contentInteraction:(MJPopupViewContentInteraction)contentInteraction;
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType contentInteraction:(MJPopupViewContentInteraction)contentInteraction;

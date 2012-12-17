@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+/*!
+ @class MJPopupViewController
+ @abstract base class for any view controller you want to display as a popup using the MJPopupViewController extension (it is recommended to use this base class but not required)
+ */
 @interface MJPopupViewController : UIViewController
 
 @property (nonatomic,readwrite,strong) UIViewController *popupParent;

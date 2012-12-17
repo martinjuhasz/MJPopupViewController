@@ -20,22 +20,22 @@ static NSNumber *_popupControllerId = nil;
 static int _AddPopupController(NSArray *popupController) {
     if (_popupControllers == nil) {
         _popupControllers = [[NSMutableDictionary alloc] init];
-        DDLogCVerbose(@"allocated popupControllers dictionary!");
+        //DDLogCVerbose(@"allocated popupControllers dictionary!");
     }
     int pid = [_popupControllerId intValue];
     _popupControllerId = @(pid+1);
     [_popupControllers setObject:popupController forKey:@(pid)];
-    DDLogCVerbose(@"add popupController for %d", pid);
+    //DDLogCVerbose(@"add popupController for %d", pid);
     return pid;
 }
 
 static void _RemovePopupControllerWithId (int pid) {
-    DDLogCVerbose(@"remove popupController for %d", pid);
+    //DDLogCVerbose(@"remove popupController for %d", pid);
     [_popupControllers removeObjectForKey:@(pid)];
     if ([_popupControllers count] < 1) {
         _popupControllers = nil;
         _popupControllerId = nil;
-        DDLogCVerbose(@"deallocated popupControllers dictionary!");
+        //DDLogCVerbose(@"deallocated popupControllers dictionary!");
     }
 }
 
@@ -93,11 +93,11 @@ static NSArray *_PopupControllerWithId (int pid) {
 {
     int popupId = popupViewController.view.tag;
     NSArray *popupInfo = _PopupControllerWithId(popupId);
-    NSAssert(popupInfo!=nil, @"popupInfo can't be nil!");
+    //NSAssert(popupInfo!=nil, @"popupInfo can't be nil!");
     UIView *sourceView = (UIView *)popupInfo[1];
     UIView *overlayView = (UIView *)popupInfo[2];
     UIView *popupView = (UIView *)popupInfo[4];
-    DDLogVerbose(@"dismissPopupViewController %d %@", popupId, popupInfo);
+    //DDLogVerbose(@"dismissPopupViewController %d %@", popupId, popupInfo);
     
     if ([[self class] conformsToProtocol:@protocol(MJPopupViewDelegate)] && [self respondsToSelector:@selector(didDismissPopup:)]) {
         [self didDismissPopup:popupView];
@@ -122,7 +122,7 @@ static NSArray *_PopupControllerWithId (int pid) {
 - (void)dismissPopupViewControllerWithSender:(UIButton *)sender
 {
     NSArray *popupInfo = _PopupControllerWithId(sender.tag);
-    DDLogVerbose(@"dismissPopupViewControllerWithSender %d %@", sender.tag, popupInfo);
+    //DDLogVerbose(@"dismissPopupViewControllerWithSender %d %@", sender.tag, popupInfo);
     [self dismissPopupViewController:(UIViewController *)popupInfo[0]];
 }
 
@@ -170,7 +170,7 @@ static NSArray *_PopupControllerWithId (int pid) {
     overlayView.tag = popupId;
     backgroundView.tag = popupId;
     popupView.tag = popupId;
-    DDLogVerbose(@"presentPopupView %d %@", popupId, popupInfo);
+    //DDLogVerbose(@"presentPopupView %d %@", popupId, popupInfo);
     
     // Make the Background Clickable
     UIButton * dismissButton = nil;
@@ -287,7 +287,7 @@ static NSArray *_PopupControllerWithId (int pid) {
     NSArray *popupInfo = _PopupControllerWithId(popupId);
     UIView *backgroundView = (UIView *)popupInfo[3];
     UIView *popupView = (UIView *)popupInfo[4];
-    DDLogVerbose(@"slideViewOut %d %@", self.view.tag, popupInfo);
+    //DDLogVerbose(@"slideViewOut %d %@", self.view.tag, popupInfo);
     
     // Generating Start and Stop Positions
     CGSize sourceSize = sourceView.bounds.size;
