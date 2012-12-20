@@ -17,28 +17,51 @@ typedef enum {
 } MJPopupViewAnimation;
 
 typedef enum {
-    MJPopupViewContentInteractionNone = 1,
-    MJPopupViewContentInteractionDismissEverywhere,
-    MJPopupViewContentInteractionDismissBackgroundOnly,
+    MJPopupViewContentInteractionNone = 1, // no tap interaction, dismiss manually or from outside
+    MJPopupViewContentInteractionDismissEverywhere, // tapping the background or the viewcontroller will dismiss the popup
+    MJPopupViewContentInteractionDismissBackgroundOnly, // only tapping the background will dismiss the popup
 } MJPopupViewContentInteraction;
 
 typedef void(^MJPopupViewStyle)(UIView *view);
 
 extern __strong MJPopupViewStyle _popupStyle;
 
+/*! used to deliver events to an external delegate */
 @protocol MJPopupViewDelegate <NSObject>
 - (void)didDismissPopup:(UIView *)popupView;
 @end
 
 @interface UIViewController (MJPopupViewController)
+
+/*! standard style applied to all popups, for example a set of instructions modifying the view's CALayer */
 + (void)setPopupStyle:(MJPopupViewStyle)style;
 
-/*!  */
+/*! present popup with standard animation (slide in and out from bottom) and standard content interaction MJPopupViewContentInteractionNone 
+ @param popupViewController: instance of a UIViewController based class
+ @remarks it is recommended to subclass MJPopupViewController */
 - (void)presentPopupViewController:(UIViewController*)popupViewController;
+/*! present popup with standard animation (slide in and out from bottom)
+ @param popupViewController: instance of a UIViewController based class
+ @param contentInteraction: @ref MJPopupViewContentInteraction value that determines how to handle taps on content and background
+ @remarks it is recommended to subclass MJPopupViewController */
 - (void)presentPopupViewController:(UIViewController*)popupViewController contentInteraction:(MJPopupViewContentInteraction)contentInteraction;
+/*! present popup with standard animation (slide in and out from bottom)
+ @param popupViewController: instance of a UIViewController based class
+ @param animationType: @ref MJPopupViewAnimation value
+ @param contentInteraction: @ref MJPopupViewContentInteraction value that determines how to handle taps on content and background
+ @remarks it is recommended to subclass MJPopupViewController */
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType contentInteraction:(MJPopupViewContentInteraction)contentInteraction;
+
+
+/*! dismiss popup with standard animation (slide in and out from bottom)
+ @param popupViewController: instance of a UIViewController based class to dismiss */
 - (void)dismissPopupViewController:(UIViewController*)popupViewController;
+/*! dismiss popup with standard animation (slide in and out from bottom)
+ @param popupViewController: instance of a UIViewController based class to dismiss
+ @param animationType: @ref MJPopupViewAnimation value */
 - (void)dismissPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType;
+/*! dismiss the popupViewController from an control inside it
+ @remarks stay away from this, only for internal use */
 - (void)dismissPopupViewControllerWithSender:(UIButton *)sender;
 
 
