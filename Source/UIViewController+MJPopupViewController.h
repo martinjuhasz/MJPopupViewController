@@ -13,6 +13,8 @@ typedef enum {
     MJPopupViewAnimationSlideRightLeft,
     MJPopupViewAnimationSlideLeftRight,
     MJPopupViewAnimationSlideBottomBottom,
+    MJPopupViewAnimationSlideLeftLeft,
+    MJPopupViewAnimationSlideRightRight,
     MJPopupViewAnimationFade
 } MJPopupViewAnimation;
 
@@ -25,6 +27,7 @@ typedef enum {
 typedef void(^MJPopupViewStyle)(UIView *view);
 
 extern __strong MJPopupViewStyle _popupStyle;
+extern MJPopupViewAnimation _defaultAnimation;
 
 /*! used to deliver events to an external delegate */
 @protocol MJPopupViewDelegate <NSObject>
@@ -35,6 +38,8 @@ extern __strong MJPopupViewStyle _popupStyle;
 
 /*! standard style applied to all popups, for example a set of instructions modifying the view's CALayer */
 + (void)setPopupStyle:(MJPopupViewStyle)style;
+/*! default animation to be used when none is passed */
++ (void)setDefaultAnimation:(MJPopupViewAnimation)animation;
 
 /*! present popup with standard animation (slide in and out from bottom) and standard content interaction MJPopupViewContentInteractionNone 
  @param popupViewController: instance of a UIViewController based class

@@ -15,6 +15,10 @@
 @interface MJPopupViewController : UIViewController
 
 @property (nonatomic,readwrite,strong) UIViewController *popupParent;
+- (BOOL) providesPopupStartRect;
+- (CGRect) popupStartRect;
+- (BOOL) providesPopupEndRect;
+- (CGRect) popupEndRect;
 
 - (void)dismissPopupViewController;
 

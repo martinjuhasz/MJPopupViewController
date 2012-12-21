@@ -40,4 +40,9 @@
     [[self popupParent] dismissPopupViewController:self];
 }
 
+- (BOOL) providesPopupStartRect { return NO; }
+- (CGRect) popupStartRect { return self.view.frame; }
+- (BOOL) providesPopupEndRect { return NO; }
+- (CGRect) popupEndRect { return self.view.frame; }
+
 @end

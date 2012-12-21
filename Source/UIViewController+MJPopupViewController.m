@@ -13,7 +13,15 @@
 
 #define kPopupModalAnimationDuration 0.35
 
-__strong MJPopupViewStyle _popupStyle = nil;
+__strong MJPopupViewStyle _popupStyle = ^(UIView *view) {
+    view.layer.shadowPath = [UIBezierPath bezierPathWithRect:view.bounds].CGPath;
+    view.layer.masksToBounds = NO;
+    view.layer.shadowOffset = CGSizeMake(5, 5);
+    view.layer.shadowRadius = 5;
+    view.layer.shadowOpacity = 0.5;
+};
+MJPopupViewAnimation _defaultAnimation = MJPopupViewAnimationSlideBottomBottom;
+
 static NSMutableDictionary *_popupControllers = nil;
 static NSNumber *_popupControllerId = nil;
 
@@ -60,12 +68,15 @@ static NSArray *_PopupControllerWithId (int pid) {
 + (void)setPopupStyle:(MJPopupViewStyle)style {
     _popupStyle = style;
 }
++ (void)setDefaultAnimation:(MJPopupViewAnimation)animation {
+    _defaultAnimation = animation;
+}
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController {
-    [self presentPopupViewController:popupViewController animationType:MJPopupViewAnimationSlideBottomBottom contentInteraction:MJPopupViewContentInteractionNone];
+    [self presentPopupViewController:popupViewController animationType:_defaultAnimation contentInteraction:MJPopupViewContentInteractionNone];
 }
 - (void)presentPopupViewController:(UIViewController*)popupViewController contentInteraction:(MJPopupViewContentInteraction)contentInteraction {
-    [self presentPopupViewController:popupViewController animationType:MJPopupViewAnimationSlideBottomBottom contentInteraction:contentInteraction];
+    [self presentPopupViewController:popupViewController animationType:_defaultAnimation contentInteraction:contentInteraction];
 }
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType contentInteraction:(MJPopupViewContentInteraction)contentInteraction
 {
@@ -87,7 +98,7 @@ static NSArray *_PopupControllerWithId (int pid) {
 
 
 - (void)dismissPopupViewController:(UIViewController*)popupViewController {
-    [self dismissPopupViewController:popupViewController animationType:MJPopupViewAnimationSlideBottomBottom];
+    [self dismissPopupViewController:popupViewController animationType:_defaultAnimation];
 }
 - (void)dismissPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType
 {
@@ -108,8 +119,10 @@ static NSArray *_PopupControllerWithId (int pid) {
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
-        case MJPopupViewAnimationSlideRightLeft:
+        case MJPopupViewAnimationSlideLeftLeft:
         case MJPopupViewAnimationSlideLeftRight:
+        case MJPopupViewAnimationSlideRightRight:
+        case MJPopupViewAnimationSlideRightLeft:
             [self slideViewOut:popupViewController sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
             break;
             
@@ -122,8 +135,9 @@ static NSArray *_PopupControllerWithId (int pid) {
 - (void)dismissPopupViewControllerWithSender:(UIButton *)sender
 {
     NSArray *popupInfo = _PopupControllerWithId(sender.tag);
+    MJPopupViewAnimation animation = (MJPopupViewAnimation)[((NSNumber *)popupInfo[5]) intValue];
     //DDLogVerbose(@"dismissPopupViewControllerWithSender %d %@", sender.tag, popupInfo);
-    [self dismissPopupViewController:(UIViewController *)popupInfo[0]];
+    [self dismissPopupViewController:(UIViewController *)popupInfo[0] animationType:animation];
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -138,18 +152,11 @@ static NSArray *_PopupControllerWithId (int pid) {
     // check if source view controller is not in destination
     if ([sourceView.subviews containsObject:popupView]) return;
     
-    [popupViewController viewWillAppear:YES];
-    
-    // customize popupView
-    popupView.layer.shadowPath = [UIBezierPath bezierPathWithRect:popupView.bounds].CGPath;
-    popupView.layer.masksToBounds = NO;
-    popupView.layer.shadowOffset = CGSizeMake(5, 5);
-    popupView.layer.shadowRadius = 5;
-    popupView.layer.shadowOpacity = 0.5;
-    
     if (_popupStyle != nil) {
         _popupStyle(popupView);
     }
+    
+    [popupViewController viewWillAppear:YES];
     
     // Add semi overlay
     UIView *overlayView = [[UIView alloc] initWithFrame:sourceView.bounds];
@@ -164,7 +171,7 @@ static NSArray *_PopupControllerWithId (int pid) {
     [overlayView addSubview:backgroundView];
     
     // register
-    NSArray *popupInfo = @[ popupViewController, sourceView, overlayView, backgroundView, popupView ];
+    NSArray *popupInfo = @[ popupViewController, sourceView, overlayView, backgroundView, popupView, @(animationType) ];
     int popupId = _AddPopupController(popupInfo);
     sourceView.tag = popupId;
     overlayView.tag = popupId;
@@ -205,6 +212,8 @@ static NSArray *_PopupControllerWithId (int pid) {
         case MJPopupViewAnimationSlideBottomBottom:
         case MJPopupViewAnimationSlideRightLeft:
         case MJPopupViewAnimationSlideLeftRight:
+        case MJPopupViewAnimationSlideLeftLeft:
+        case MJPopupViewAnimationSlideRightRight:
             [self slideViewIn:popupViewController sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
             break;
         default:
@@ -249,10 +258,18 @@ static NSArray *_PopupControllerWithId (int pid) {
                                         popupSize.height);
 
             break;
+        case MJPopupViewAnimationSlideLeftLeft:
         case MJPopupViewAnimationSlideLeftRight:
             popupStartRect = CGRectMake(-sourceSize.width, 
                                         (sourceSize.height - popupSize.height) / 2,
                                         popupSize.width, 
+                                        popupSize.height);
+            break;
+        case MJPopupViewAnimationSlideRightRight:
+        case MJPopupViewAnimationSlideRightLeft:
+            popupStartRect = CGRectMake(sourceSize.width,
+                                        (sourceSize.height - popupSize.height) / 2,
+                                        popupSize.width,
                                         popupSize.height);
             break;
             
@@ -263,10 +280,20 @@ static NSArray *_PopupControllerWithId (int pid) {
                                         popupSize.height);
             break;
     }        
-    CGRect popupEndRect = popupView.frame;/* CGRectMake((sourceSize.width - popupSize.width) / 2,
+    CGRect popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2,
                                      (sourceSize.height - popupSize.height) / 2,
                                      popupSize.width, 
-                                     popupSize.height);*/
+                                     popupSize.height);
+    
+    if ([popupViewController isKindOfClass:[MJPopupViewController class]]) {
+        MJPopupViewController *mjPopupViewController = (MJPopupViewController *)popupViewController;
+        if (mjPopupViewController.providesPopupEndRect) {
+            popupEndRect = mjPopupViewController.popupEndRect;
+        }
+        if (mjPopupViewController.providesPopupStartRect) {
+            popupStartRect = mjPopupViewController.popupStartRect;
+        }
+    }
     
     // Set starting properties
     popupView.frame = popupStartRect;
@@ -306,6 +333,7 @@ static NSArray *_PopupControllerWithId (int pid) {
                                       popupSize.width, 
                                       popupSize.height);
             break;
+        case MJPopupViewAnimationSlideRightRight:
         case MJPopupViewAnimationSlideLeftRight:
             popupEndRect = CGRectMake(sourceSize.width, 
                                       popupView.frame.origin.y, 
