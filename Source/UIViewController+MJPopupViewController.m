@@ -348,6 +348,13 @@ static NSArray *_PopupControllerWithId (int pid) {
             break;
     }
     
+    if ([popupViewController isKindOfClass:[MJPopupViewController class]]) {
+        MJPopupViewController *mjPopupViewController = (MJPopupViewController *)popupViewController;
+        if (mjPopupViewController.providesPopupStartRect) {
+            popupEndRect = mjPopupViewController.popupStartRect;
+        }
+    }
+    
     [UIView animateWithDuration:kPopupModalAnimationDuration delay:0.0f options:UIViewAnimationCurveEaseIn animations:^{
         popupView.frame = popupEndRect;
         backgroundView.alpha = 0.0f;
