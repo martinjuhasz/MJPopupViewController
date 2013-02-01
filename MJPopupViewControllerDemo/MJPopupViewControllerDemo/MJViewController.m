@@ -12,7 +12,6 @@
 #import "MJSecondDetailViewController.h"
 
 @interface MJViewController () <MJSecondPopupDelegate>{
-    MJSecondDetailViewController *secondDetailViewController;
     NSArray *actions;
     NSArray *animations;
 }
@@ -59,7 +58,6 @@
 - (void)cancelButtonClicked:(MJSecondDetailViewController *)aSecondDetailViewController
 {
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
-    secondDetailViewController = nil;
 }
 
 
@@ -172,8 +170,7 @@
             break;
             
         default: {
-            secondDetailViewController = nil;
-            secondDetailViewController = [[MJSecondDetailViewController alloc] initWithNibName:@"MJSecondDetailViewController" bundle:nil];
+            MJSecondDetailViewController *secondDetailViewController = [[MJSecondDetailViewController alloc] initWithNibName:@"MJSecondDetailViewController" bundle:nil];
             secondDetailViewController.delegate = self;
             [self presentPopupViewController:secondDetailViewController animationType:MJPopupViewAnimationFade];
             
