@@ -310,6 +310,10 @@
 		7A1869831597900300526B20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MJPopupViewControllerDemo/MJPopupViewControllerDemo-Prefix.pch";
 				INFOPLIST_FILE = "MJPopupViewControllerDemo/MJPopupViewControllerDemo-Info.plist";
@@ -323,6 +327,10 @@
 		7A1869841597900300526B20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MJPopupViewControllerDemo/MJPopupViewControllerDemo-Prefix.pch";
 				INFOPLIST_FILE = "MJPopupViewControllerDemo/MJPopupViewControllerDemo-Info.plist";

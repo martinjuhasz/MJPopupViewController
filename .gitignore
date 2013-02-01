@@ -1,6 +1,19 @@
-.DS_Store
-*.pyc
-build/
-cuserdata
-*.xcworkspace
-.xcodeproj/ !*.xcodeproj/project.pbxproj
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+*.bak*
+
+#Xcode files
+#This ignores everything inside a *.xcodeproj except the project.pbxproj
+*.xcodeproj/
+!*.xcodeproj/project.pbxproj
+*.log
+xcuserdata
+
+#Project files
+[Bb]uild/
+
+#Version control files
+.svn
+*.orig
+
