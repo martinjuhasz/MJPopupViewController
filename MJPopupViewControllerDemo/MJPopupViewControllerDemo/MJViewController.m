@@ -27,9 +27,13 @@
         animations = [NSArray arrayWithObjects:
                       @"fade in",
                       @"slide - bottom to top",
-                      @"slide - right to left",
-                      @"slide - left to right",
                       @"slide - bottom to bottom",
+                      @"slide - top to top",
+                      @"slide - top to bottom",
+                      @"slide - left to left",
+                      @"slide - left to right",
+                      @"slide - right to left",
+                      @"slide - right to right",
                       nil];
         actions = [NSArray arrayWithObjects:
                    @"popup with user interaction",
