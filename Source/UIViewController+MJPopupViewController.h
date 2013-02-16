@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class MJPopupBackgroundView;
+
 typedef enum {
     MJPopupViewAnimationFade = 0,
     MJPopupViewAnimationSlideBottomTop = 1,
@@ -23,6 +25,7 @@ typedef enum {
 @interface UIViewController (MJPopupViewController)
 
 @property (nonatomic, retain) UIViewController *mj_popupViewController;
+@property (nonatomic, retain) MJPopupBackgroundView *mj_popupBackgroundView;
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType;
 - (void)dismissPopupViewControllerWithanimationType:(MJPopupViewAnimation)animationType;
