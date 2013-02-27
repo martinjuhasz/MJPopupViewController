@@ -103,6 +103,7 @@ static void * const keypath = (void*)&keypath;
     popupView.layer.shadowOffset = CGSizeMake(5, 5);
     popupView.layer.shadowRadius = 5;
     popupView.layer.shadowOpacity = 0.5;
+    popupView.layer.cornerRadius = 6.0f;
     
     // Add semi overlay
     UIView *overlayView = [[UIView alloc] initWithFrame:sourceView.bounds];
