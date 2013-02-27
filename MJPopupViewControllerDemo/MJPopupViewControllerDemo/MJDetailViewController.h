@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MJDetailViewController : UIViewController
+@interface MJDetailViewController : UIViewController <UITextFieldDelegate>
+
+@property (unsafe_unretained, nonatomic) IBOutlet UITextField *textfield;
 
 @end
