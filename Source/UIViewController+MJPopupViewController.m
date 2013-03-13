@@ -60,7 +60,6 @@ static void * const keypath = (void*)&keypath;
 {
     UIView *sourceView = [self topView];
     UIView *popupView = [sourceView viewWithTag:kMJPopupViewTag];
-    UIView *overlayView = [sourceView viewWithTag:kMJOverlayViewTag];
     
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
@@ -71,11 +70,11 @@ static void * const keypath = (void*)&keypath;
         case MJPopupViewAnimationSlideLeftRight:
         case MJPopupViewAnimationSlideRightLeft:
         case MJPopupViewAnimationSlideRightRight:
-            [self slideViewOut:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
+            [self slideViewOut:popupView sourceView:sourceView withAnimationType:animationType];
             break;
             
         default:
-            [self fadeViewOut:popupView sourceView:sourceView overlayView:overlayView];
+            [self fadeViewOut:popupView sourceView:sourceView];
             break;
     }
     self.mj_popupViewController = nil;
@@ -104,31 +103,9 @@ static void * const keypath = (void*)&keypath;
     popupView.layer.shadowRadius = 5;
     popupView.layer.shadowOpacity = 0.5;
     
-    // Add semi overlay
-    UIView *overlayView = [[UIView alloc] initWithFrame:sourceView.bounds];
-    overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    overlayView.tag = kMJOverlayViewTag;
-    overlayView.backgroundColor = [UIColor clearColor];
-    
-    // BackgroundView
-    self.mj_popupBackgroundView = [[MJPopupBackgroundView alloc] initWithFrame:sourceView.bounds];
-    self.mj_popupBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.mj_popupBackgroundView.backgroundColor = [UIColor clearColor];
-    self.mj_popupBackgroundView.alpha = 0.0f;
-    [overlayView addSubview:self.mj_popupBackgroundView];
-    
-    // Make the Background Clickable
-    UIButton * dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    dismissButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    dismissButton.backgroundColor = [UIColor clearColor];
-    dismissButton.frame = sourceView.bounds;
-    [overlayView addSubview:dismissButton];
-    
     popupView.alpha = 0.0f;
-    [overlayView addSubview:popupView];
-    [sourceView addSubview:overlayView];
+    [sourceView addSubview:popupView];
     
-    [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
@@ -138,12 +115,10 @@ static void * const keypath = (void*)&keypath;
         case MJPopupViewAnimationSlideLeftRight:
         case MJPopupViewAnimationSlideRightLeft:
         case MJPopupViewAnimationSlideRightRight:
-            dismissButton.tag = animationType;
-            [self slideViewIn:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
+            [self slideViewIn:popupView sourceView:sourceView withAnimationType:animationType];
             break;
         default:
-            dismissButton.tag = MJPopupViewAnimationFade;
-            [self fadeViewIn:popupView sourceView:sourceView overlayView:overlayView];
+            [self fadeViewIn:popupView sourceView:sourceView];
             break;
     }
 }
@@ -187,7 +162,7 @@ static void * const keypath = (void*)&keypath;
 
 #pragma mark --- Slide
 
-- (void)slideViewIn:(UIView*)popupView sourceView:(UIView*)sourceView overlayView:(UIView*)overlayView withAnimationType:(MJPopupViewAnimation)animationType
+- (void)slideViewIn:(UIView*)popupView sourceView:(UIView*)sourceView withAnimationType:(MJPopupViewAnimation)animationType
 {
     // Generating Start and Stop Positions
     CGSize sourceSize = sourceView.bounds.size;
@@ -242,7 +217,7 @@ static void * const keypath = (void*)&keypath;
     }];
 }
 
-- (void)slideViewOut:(UIView*)popupView sourceView:(UIView*)sourceView overlayView:(UIView*)overlayView withAnimationType:(MJPopupViewAnimation)animationType
+- (void)slideViewOut:(UIView*)popupView sourceView:(UIView*)sourceView withAnimationType:(MJPopupViewAnimation)animationType
 {
     // Generating Start and Stop Positions
     CGSize sourceSize = sourceView.bounds.size;
@@ -284,7 +259,6 @@ static void * const keypath = (void*)&keypath;
         self.mj_popupBackgroundView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         [popupView removeFromSuperview];
-        [overlayView removeFromSuperview];
         [self.mj_popupViewController viewDidDisappear:NO];
         self.mj_popupViewController = nil;
     }];
@@ -292,7 +266,7 @@ static void * const keypath = (void*)&keypath;
 
 #pragma mark --- Fade
 
-- (void)fadeViewIn:(UIView*)popupView sourceView:(UIView*)sourceView overlayView:(UIView*)overlayView
+- (void)fadeViewIn:(UIView*)popupView sourceView:(UIView*)sourceView
 {
     // Generating Start and Stop Positions
     CGSize sourceSize = sourceView.bounds.size;
@@ -315,7 +289,7 @@ static void * const keypath = (void*)&keypath;
     }];
 }
 
-- (void)fadeViewOut:(UIView*)popupView sourceView:(UIView*)sourceView overlayView:(UIView*)overlayView
+- (void)fadeViewOut:(UIView*)popupView sourceView:(UIView*)sourceView
 {
     [UIView animateWithDuration:kPopupModalAnimationDuration animations:^{
         [self.mj_popupViewController viewWillDisappear:NO];
@@ -323,7 +297,6 @@ static void * const keypath = (void*)&keypath;
         popupView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         [popupView removeFromSuperview];
-        [overlayView removeFromSuperview];
         [self.mj_popupViewController viewDidDisappear:NO];
         self.mj_popupViewController = nil;
     }];
