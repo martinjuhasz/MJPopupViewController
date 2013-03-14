@@ -10,7 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MJPopupBackgroundView.h"
 #import "MJPopupViewController.h"
+#import "DDLog.h"
 
+DDLogStandard()
 #define kPopupModalAnimationDuration 0.35
 
 __strong MJPopupViewStyle _popupStyle = ^(UIView *view) {
