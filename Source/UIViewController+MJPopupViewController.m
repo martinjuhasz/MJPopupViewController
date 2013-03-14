@@ -12,7 +12,7 @@
 #import "MJPopupViewController.h"
 #import "DDLog.h"
 
-DDLogStandard()
+static const int ddLogLevel = LOG_LEVEL_WARN;
 #define kPopupModalAnimationDuration 0.35
 
 __strong MJPopupViewStyle _popupStyle = ^(UIView *view) {
