@@ -10,9 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MJPopupBackgroundView.h"
 #import "MJPopupViewController.h"
-#import "DDLog.h"
 
-static const int ddLogLevel = LOG_LEVEL_WARN;
 #define kPopupModalAnimationDuration 0.35
 
 __strong MJPopupViewStyle _popupStyle = ^(UIView *view) {
@@ -56,6 +54,7 @@ static NSArray *_PopupControllerWithId (int pid) {
 @interface UIViewController (MJPopupViewControllerPrivate)
 - (UIView*)topView;
 - (void)didDismissPopup:(UIView *)popupView;
+- (void)didDismissPopupViewController:(UIViewController *)popupViewController;
 - (void)presentPopupView:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType contentInteraction:(MJPopupViewContentInteraction)contentInteraction;
 @end
 
@@ -112,8 +111,13 @@ static NSArray *_PopupControllerWithId (int pid) {
     UIView *popupView = (UIView *)popupInfo[4];
     //DDLogVerbose(@"dismissPopupViewController %d %@", popupId, popupInfo);
     
-    if ([[self class] conformsToProtocol:@protocol(MJPopupViewDelegate)] && [self respondsToSelector:@selector(didDismissPopup:)]) {
-        [self didDismissPopup:popupView];
+    if ([[self class] conformsToProtocol:@protocol(MJPopupViewDelegate)]) {
+        if ([self respondsToSelector:@selector(didDismissPopup:)]) {
+            [self didDismissPopup:popupView];
+        }
+        if ([self respondsToSelector:@selector(didDismissPopupViewController:)]) {
+            [self didDismissPopupViewController:popupViewController];
+        }
     }
     
     [popupViewController viewWillDisappear:YES];

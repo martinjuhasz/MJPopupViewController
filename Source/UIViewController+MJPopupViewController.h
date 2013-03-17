@@ -32,6 +32,7 @@ extern MJPopupViewAnimation _defaultAnimation;
 /*! used to deliver events to an external delegate */
 @protocol MJPopupViewDelegate <NSObject>
 - (void)didDismissPopup:(UIView *)popupView;
+- (void)didDismissPopupViewController:(UIViewController *)popupViewController;
 @end
 
 @interface UIViewController (MJPopupViewController)
