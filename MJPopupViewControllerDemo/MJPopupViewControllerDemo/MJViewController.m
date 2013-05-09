@@ -37,6 +37,7 @@
                       nil];
         actions = [NSArray arrayWithObjects:
                    @"popup with user interaction",
+                   @"modal popup",
                    nil];
     }
     return self;
@@ -172,12 +173,19 @@
             [self presentPopupViewController:detailViewController animationType:indexPath.row];
         }
             break;
-            
+
         default: {
             MJSecondDetailViewController *secondDetailViewController = [[MJSecondDetailViewController alloc] initWithNibName:@"MJSecondDetailViewController" bundle:nil];
             secondDetailViewController.delegate = self;
-            [self presentPopupViewController:secondDetailViewController animationType:MJPopupViewAnimationFade];
-            
+            switch (indexPath.row) {
+                case 0:
+                    [self presentPopupViewController:secondDetailViewController animationType:MJPopupViewAnimationFade];
+                    break;
+
+                default:
+                    [self presentModalPopupViewController:secondDetailViewController animationType:MJPopupViewAnimationFade];
+                    break;
+            }
         }
             break;
     }

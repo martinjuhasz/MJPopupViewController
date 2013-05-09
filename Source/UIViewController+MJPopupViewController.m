@@ -52,8 +52,18 @@ static void * const keypath = (void*)&keypath;
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType
 {
+    [self presentPopupViewController:popupViewController animationType:animationType isModal:NO];
+}
+
+- (void)presentModalPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType
+{
+    [self presentPopupViewController:popupViewController animationType:animationType isModal:YES];
+}
+
+- (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType isModal:(BOOL)modal
+{
     self.mj_popupViewController = popupViewController;
-    [self presentPopupView:popupViewController.view animationType:animationType];
+    [self presentPopupView:popupViewController.view animationType:animationType isModal:modal];
 }
 
 - (void)dismissPopupViewControllerWithanimationType:(MJPopupViewAnimation)animationType
@@ -87,7 +97,7 @@ static void * const keypath = (void*)&keypath;
 #pragma mark -
 #pragma mark View Handling
 
-- (void)presentPopupView:(UIView*)popupView animationType:(MJPopupViewAnimation)animationType
+- (void)presentPopupView:(UIView*)popupView animationType:(MJPopupViewAnimation)animationType isModal:(BOOL)modal
 {
     UIView *sourceView = [self topView];
     sourceView.tag = kMJSourceViewTag;
@@ -118,19 +128,23 @@ static void * const keypath = (void*)&keypath;
     self.mj_popupBackgroundView.backgroundColor = [UIColor clearColor];
     self.mj_popupBackgroundView.alpha = 0.0f;
     [overlayView addSubview:self.mj_popupBackgroundView];
-    
-    // Make the Background Clickable
-    UIButton * dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    dismissButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    dismissButton.backgroundColor = [UIColor clearColor];
-    dismissButton.frame = sourceView.bounds;
-    [overlayView addSubview:dismissButton];
-    
+
+    UIButton *dismissButton = nil;
+    if (!modal) {
+        // Make the Background Clickable
+        dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        dismissButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        dismissButton.backgroundColor = [UIColor clearColor];
+        dismissButton.frame = sourceView.bounds;
+        [overlayView addSubview:dismissButton];
+
+        [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
+    }
+
     popupView.alpha = 0.0f;
     [overlayView addSubview:popupView];
     [sourceView addSubview:overlayView];
-    
-    [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
+
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
