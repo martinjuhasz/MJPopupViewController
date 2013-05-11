@@ -22,6 +22,7 @@
 		7A469E1C1597914000BA5F2E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A469E1B1597914000BA5F2E /* QuartzCore.framework */; };
 		7A469E21159793BE00BA5F2E /* MJSecondDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A469E1F159793BE00BA5F2E /* MJSecondDetailViewController.m */; };
 		7A469E22159793BE00BA5F2E /* MJSecondDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A469E20159793BE00BA5F2E /* MJSecondDetailViewController.xib */; };
+		99B2FB5E173EE00100457C5D /* MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B2FB5D173EE00100457C5D /* MJPopupViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,8 @@
 		7A469E1E159793BE00BA5F2E /* MJSecondDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJSecondDetailViewController.h; sourceTree = "<group>"; };
 		7A469E1F159793BE00BA5F2E /* MJSecondDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJSecondDetailViewController.m; sourceTree = "<group>"; };
 		7A469E20159793BE00BA5F2E /* MJSecondDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJSecondDetailViewController.xib; sourceTree = "<group>"; };
+		99B2FB5C173EE00100457C5D /* MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPopupViewController.h; sourceTree = "<group>"; };
+		99B2FB5D173EE00100457C5D /* MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPopupViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +127,8 @@
 			children = (
 				7A469E0F1597903B00BA5F2E /* MJPopupBackgroundView.h */,
 				7A469E101597903B00BA5F2E /* MJPopupBackgroundView.m */,
+				99B2FB5C173EE00100457C5D /* MJPopupViewController.h */,
+				99B2FB5D173EE00100457C5D /* MJPopupViewController.m */,
 				7A469E111597903B00BA5F2E /* UIViewController+MJPopupViewController.h */,
 				7A469E121597903B00BA5F2E /* UIViewController+MJPopupViewController.m */,
 			);
@@ -188,7 +193,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MJ;
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = 7A18695E1597900300526B20 /* Build configuration list for PBXProject "MJPopupViewControllerDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -233,6 +238,7 @@
 				7A469E141597903B00BA5F2E /* UIViewController+MJPopupViewController.m in Sources */,
 				7A469E19159790A000BA5F2E /* MJDetailViewController.m in Sources */,
 				7A469E21159793BE00BA5F2E /* MJSecondDetailViewController.m in Sources */,
+				99B2FB5E173EE00100457C5D /* MJPopupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +270,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -289,6 +299,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

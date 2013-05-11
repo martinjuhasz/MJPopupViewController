@@ -11,7 +11,7 @@
 #import "MJDetailViewController.h"
 #import "MJSecondDetailViewController.h"
 
-@interface MJViewController () <MJSecondPopupDelegate>{
+@interface MJViewController() <MJSecondPopupDelegate>{
     MJSecondDetailViewController *secondDetailViewController;
     NSArray *actions;
     NSArray *animations;
@@ -58,7 +58,7 @@
 
 - (void)cancelButtonClicked:(MJSecondDetailViewController *)aSecondDetailViewController
 {
-    [self dismissPopupViewControllerWithAnimationType:MJPopupViewAnimationFade];
+    [self dismissPopupViewController:aSecondDetailViewController animationType:MJPopupViewAnimationFade];
     secondDetailViewController = nil;
 }
 
@@ -167,7 +167,7 @@
     switch (indexPath.section) {
         case 0: {
             MJDetailViewController *detailViewController = [[MJDetailViewController alloc] initWithNibName:@"MJDetailViewController" bundle:nil];
-            [self presentPopupViewController:detailViewController animationType:indexPath.row];
+            [self presentPopupViewController:detailViewController animationType:indexPath.row contentInteraction:MJPopupViewContentInteractionDismissBackgroundOnly];
         }
             break;
             
@@ -175,7 +175,7 @@
             secondDetailViewController = nil;
             secondDetailViewController = [[MJSecondDetailViewController alloc] initWithNibName:@"MJSecondDetailViewController" bundle:nil];
             secondDetailViewController.delegate = self;
-            [self presentPopupViewController:secondDetailViewController animationType:MJPopupViewAnimationFade];
+            [self presentPopupViewController:secondDetailViewController animationType:MJPopupViewAnimationFade contentInteraction:MJPopupViewContentInteractionDismissBackgroundOnly];
             
         }
             break;
