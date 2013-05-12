@@ -10,10 +10,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MJPopupBackgroundView.h"
 #import "MJPopupViewController.h"
-#if __POD_CocoaLumberjack || __POD_StaticLumberjack
+#ifdef __POD_CocoaLumberjack
 #import "DDLog.h"
 static const int ddLogLevel = LOG_LEVEL_WARN;
-#endif 
+#endif
+#ifdef __POD_StaticLumberjack
+#import "DDLog.h"
+#endif
 
 #define kPopupModalAnimationDuration 0.35
 
@@ -86,13 +89,19 @@ static NSArray *_PopupControllerWithId (int pid) {
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType contentInteraction:(MJPopupViewContentInteraction)contentInteraction
 {
     if (popupViewController == nil) {
-#if __POD_CocoaLumberjack || __POD_StaticLumberjack
+#ifdef __POD_CocoaLumberjack
+        DDLogError(@"presentPopupViewController: popupViewController == nil");
+#endif
+#ifdef __POD_StaticLumberjack
         DDLogError(@"presentPopupViewController: popupViewController == nil");
 #endif
         return;
     }
     if (popupViewController.view == nil) {
-#if __POD_CocoaLumberjack || __POD_StaticLumberjack
+#ifdef __POD_CocoaLumberjack
+        DDLogError(@"presentPopupViewController: popupViewController.view == nil");
+#endif
+#ifdef __POD_StaticLumberjack
         DDLogError(@"presentPopupViewController: popupViewController.view == nil");
 #endif
         return;
