@@ -16,6 +16,7 @@ static const int ddLogLevel = LOG_LEVEL_WARN;
 #endif
 #ifdef __POD_StaticLumberjack
 #import "DDLog.h"
+static const int ddLogLevel = LOG_LEVEL_WARN;
 #endif
 
 #define kPopupModalAnimationDuration 0.35
