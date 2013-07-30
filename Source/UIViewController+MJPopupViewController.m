@@ -309,6 +309,13 @@ static NSArray *_PopupControllerWithId (int pid) {
                                      popupSize.width, 
                                      popupSize.height);
     
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        if (popupEndRect.origin.y < 0) {
+            popupEndRect.size.height += popupEndRect.origin.y;
+            popupEndRect.origin.y = 0;
+        }
+    }
+    
     if ([popupViewController isKindOfClass:[MJPopupViewController class]]) {
         MJPopupViewController *mjPopupViewController = (MJPopupViewController *)popupViewController;
         if (mjPopupViewController.providesPopupEndRect) {
