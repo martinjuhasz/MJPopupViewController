@@ -29,6 +29,7 @@ __strong MJPopupViewStyle _popupStyle = ^(UIView *view) {
     view.layer.shadowOpacity = 0.5;
 };
 MJPopupViewAnimation _defaultAnimation = MJPopupViewAnimationSlideBottomBottom;
+BOOL _phoneCompatibilityMode = NO;
 
 static NSMutableDictionary *_popupControllers = nil;
 static NSNumber *_popupControllerId = nil;
@@ -76,6 +77,9 @@ static NSArray *_PopupControllerWithId (int pid) {
 
 + (void)setPopupStyle:(MJPopupViewStyle)style {
     _popupStyle = style;
+}
++ (void)setPhoneCompatibilityMode:(BOOL)state {
+    _phoneCompatibilityMode = state;
 }
 + (void)setDefaultAnimation:(MJPopupViewAnimation)animation {
     _defaultAnimation = animation;
@@ -309,10 +313,15 @@ static NSArray *_PopupControllerWithId (int pid) {
                                      popupSize.width, 
                                      popupSize.height);
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        if (popupEndRect.origin.y < 0) {
-            popupEndRect.size.height += popupEndRect.origin.y;
-            popupEndRect.origin.y = 0;
+    if (_phoneCompatibilityMode) {
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            if (popupEndRect.origin.y < 0) {
+                popupEndRect.size.height += popupEndRect.origin.y;
+                popupEndRect.origin.y = 0;
+            }
+            if (![[UIApplication sharedApplication] isStatusBarHidden]) {
+                popupEndRect.origin.y += 20;
+            }
         }
     }
     

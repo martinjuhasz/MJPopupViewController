@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MJPopupViewController"
-  s.version      = "1.0.19"
+  s.version      = "1.1.0"
   s.summary      = "podspec for https://github.com/martinjuhasz/MJPopupViewController."
   s.homepage     = "https://github.com/martinjuhasz/MJPopupViewController"
   s.author       = { "Andreas Zeitler" => "azeitler@dopanic.com" }
