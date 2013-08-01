@@ -124,7 +124,7 @@ static void * const keypath = (void*)&keypath;
     overlayView.backgroundColor = [UIColor clearColor];
     
     // BackgroundView
-    self.mj_popupBackgroundView = [[MJPopupBackgroundView alloc] initWithFrame:sourceView.bounds];
+    self.mj_popupBackgroundView = [[MJPopupBackgroundView alloc] initWithFrame:overlayView.bounds];
     self.mj_popupBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.mj_popupBackgroundView.backgroundColor = [UIColor clearColor];
     self.mj_popupBackgroundView.alpha = 0.0f;
