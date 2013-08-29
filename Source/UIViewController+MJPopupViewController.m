@@ -10,11 +10,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MJPopupBackgroundView.h"
 #import "MJPopupViewController.h"
-#ifdef __POD_CocoaLumberjack
+#ifdef COCOAPODS_POD_AVAILABLE_CocoaLumberjack
 #import "DDLog.h"
 static const int ddLogLevel = LOG_LEVEL_WARN;
 #endif
-#ifdef __POD_StaticLumberjack
+#ifdef COCOAPODS_POD_AVAILABLE_StaticLumberjack
 #import "DDLog.h"
 static const int ddLogLevel = LOG_LEVEL_WARN;
 #endif
@@ -94,19 +94,19 @@ static NSArray *_PopupControllerWithId (int pid) {
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType contentInteraction:(MJPopupViewContentInteraction)contentInteraction
 {
     if (popupViewController == nil) {
-#ifdef __POD_CocoaLumberjack
+#ifdef COCOAPODS_POD_AVAILABLE_CocoaLumberjack
         DDLogError(@"presentPopupViewController: popupViewController == nil");
 #endif
-#ifdef __POD_StaticLumberjack
+#ifdef COCOAPODS_POD_AVAILABLE_StaticLumberjack
         DDLogError(@"presentPopupViewController: popupViewController == nil");
 #endif
         return;
     }
     if (popupViewController.view == nil) {
-#ifdef __POD_CocoaLumberjack
+#ifdef COCOAPODS_POD_AVAILABLE_CocoaLumberjack
         DDLogError(@"presentPopupViewController: popupViewController.view == nil");
 #endif
-#ifdef __POD_StaticLumberjack
+#ifdef COCOAPODS_POD_AVAILABLE_StaticLumberjack
         DDLogError(@"presentPopupViewController: popupViewController.view == nil");
 #endif
         return;
