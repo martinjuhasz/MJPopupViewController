@@ -84,7 +84,6 @@ static void * const keypath = (void*)&keypath;
             [self fadeViewOut:popupView sourceView:sourceView overlayView:overlayView];
             break;
     }
-    self.mj_popupViewController = nil;
 }
 
 
