@@ -10,13 +10,15 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MJPopupBackgroundView.h"
 #import "MJPopupViewController.h"
+
 #ifdef COCOAPODS_POD_AVAILABLE_CocoaLumberjack
-#import "DDLog.h"
-static const int ddLogLevel = LOG_LEVEL_WARN;
-#endif
-#ifdef COCOAPODS_POD_AVAILABLE_StaticLumberjack
-#import "DDLog.h"
-static const int ddLogLevel = LOG_LEVEL_WARN;
+    #import "DDLog.h"
+    static const int ddLogLevel = LOG_LEVEL_WARN;
+#else 
+    #ifdef COCOAPODS_POD_AVAILABLE_StaticLumberjack
+        #import "DDLog.h"
+        static const int ddLogLevel = LOG_LEVEL_WARN;
+    #endif
 #endif
 
 #define kPopupModalAnimationDuration 0.35
