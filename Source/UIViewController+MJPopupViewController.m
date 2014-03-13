@@ -69,6 +69,9 @@ static void * const keypath = (void*)&keypath;
     UIView *overlayView = [sourceView viewWithTag:kMJOverlayViewTag];
     
     switch (animationType) {
+        case MJPopupViewAnimationSlideBelowNavbarTop:
+        case MJPopupViewAnimationSlideBelowNavbarBottom:
+
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
         case MJPopupViewAnimationSlideTopTop:
@@ -142,6 +145,9 @@ static void * const keypath = (void*)&keypath;
     
     [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
     switch (animationType) {
+        case MJPopupViewAnimationSlideBelowNavbarTop:
+        case MJPopupViewAnimationSlideBelowNavbarBottom:
+
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
         case MJPopupViewAnimationSlideTopTop:
@@ -176,6 +182,9 @@ static void * const keypath = (void*)&keypath;
     if ([sender isKindOfClass:[UIButton class]]) {
         UIButton* dismissButton = sender;
         switch (dismissButton.tag) {
+            case MJPopupViewAnimationSlideBelowNavbarTop:
+            case MJPopupViewAnimationSlideBelowNavbarBottom:
+
             case MJPopupViewAnimationSlideBottomTop:
             case MJPopupViewAnimationSlideBottomBottom:
             case MJPopupViewAnimationSlideTopTop:
@@ -223,7 +232,8 @@ static void * const keypath = (void*)&keypath;
                                         popupSize.width,
                                         popupSize.height);
             break;
-            
+        case MJPopupViewAnimationSlideBelowNavbarTop:
+        case MJPopupViewAnimationSlideBelowNavbarBottom:
         case MJPopupViewAnimationSlideTopTop:
         case MJPopupViewAnimationSlideTopBottom:
             popupStartRect = CGRectMake((sourceSize.width - popupSize.width) / 2,
@@ -244,6 +254,17 @@ static void * const keypath = (void*)&keypath;
                                      popupSize.width,
                                      popupSize.height);
     
+    // both "BelowNavbar" types comes from top
+    // if navigationController is nil, popup stay below statusBar
+    if(animationType==MJPopupViewAnimationSlideBelowNavbarBottom||animationType==MJPopupViewAnimationSlideBelowNavbarTop){
+      static int navBarOffset = 10;
+
+      popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2,
+                                (self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height) + navBarOffset,
+                                popupSize.width,
+                                popupSize.height);
+    }
+
     // Set starting properties
     popupView.frame = popupStartRect;
     popupView.alpha = 1.0f;
@@ -263,6 +284,7 @@ static void * const keypath = (void*)&keypath;
     CGSize popupSize = popupView.bounds.size;
     CGRect popupEndRect;
     switch (animationType) {
+        case MJPopupViewAnimationSlideBelowNavbarTop:
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideTopTop:
             popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2,
@@ -270,6 +292,7 @@ static void * const keypath = (void*)&keypath;
                                       popupSize.width,
                                       popupSize.height);
             break;
+        case MJPopupViewAnimationSlideBelowNavbarBottom:
         case MJPopupViewAnimationSlideBottomBottom:
         case MJPopupViewAnimationSlideTopBottom:
             popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2,
