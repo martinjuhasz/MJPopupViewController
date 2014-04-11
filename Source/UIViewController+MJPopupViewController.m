@@ -31,6 +31,8 @@ __strong MJPopupViewStyle _popupStyle = ^(UIView *view) {
     view.layer.shadowOpacity = 0.5;
 };
 MJPopupViewAnimation _defaultAnimation = MJPopupViewAnimationSlideBottomBottom;
+Class _backgroundViewClass = nil;
+BOOL _useBackgroundView = NO;
 BOOL _phoneCompatibilityMode = NO;
 
 static NSMutableDictionary *_popupControllers = nil;
@@ -85,6 +87,12 @@ static NSArray *_PopupControllerWithId (int pid) {
 }
 + (void)setDefaultAnimation:(MJPopupViewAnimation)animation {
     _defaultAnimation = animation;
+}
++ (void)setBackgroundViewClass:(Class)backgroundViewClass {
+    _backgroundViewClass = backgroundViewClass;
+}
++ (void)setUseBackgroundView:(BOOL)useBackgroundView {
+    _useBackgroundView = useBackgroundView;
 }
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController {
@@ -194,12 +202,20 @@ static NSArray *_PopupControllerWithId (int pid) {
     overlayView.backgroundColor = [UIColor clearColor];
     
     // BackgroundView
-    MJPopupBackgroundView *backgroundView = [[MJPopupBackgroundView alloc] initWithFrame:sourceView.bounds];
-    backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    backgroundView.backgroundColor = [UIColor clearColor];
-    backgroundView.alpha = 0.0f;
-    [overlayView addSubview:backgroundView];
-    
+    UIView *backgroundView = nil;
+    if (_useBackgroundView) {
+        if (!_backgroundViewClass) {
+            _backgroundViewClass = [MJPopupBackgroundView class];
+        }
+        NSAssert([_backgroundViewClass isKindOfClass:[UIView class]], @"_backgroundViewClass is not a subclass of UIView");
+        backgroundView = (UIView *)[[[_backgroundViewClass class] alloc] initWithFrame:sourceView.bounds];
+        backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        backgroundView.backgroundColor = [UIColor clearColor];
+        backgroundView.alpha = 0.0f;
+        [overlayView addSubview:backgroundView];
+        _backgroundViewClass = nil;
+    }
+
     // register
     NSArray *popupInfo = @[ popupViewController, sourceView, overlayView, backgroundView, popupView, @(animationType) ];
     int popupId = _AddPopupController(popupInfo);
@@ -341,7 +357,9 @@ static NSArray *_PopupControllerWithId (int pid) {
     popupView.frame = popupStartRect;
     popupView.alpha = 1.0f;
     [UIView animateWithDuration:kPopupModalAnimationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
-        backgroundView.alpha = 1.0f;
+        if (backgroundView) {
+            backgroundView.alpha = 1.0f;
+        }
         popupView.frame = popupEndRect;
     } completion:^(BOOL finished) {
         if (finished) {
@@ -399,7 +417,9 @@ static NSArray *_PopupControllerWithId (int pid) {
     
     [UIView animateWithDuration:kPopupModalAnimationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
         popupView.frame = popupEndRect;
-        backgroundView.alpha = 0.0f;
+        if (backgroundView) {
+            backgroundView.alpha = 0.0f;
+        }
     } completion:^(BOOL finished) {
         if (finished) {
             [popupView removeFromSuperview];
@@ -433,7 +453,9 @@ static NSArray *_PopupControllerWithId (int pid) {
     popupView.alpha = 0.0f;
     
     [UIView animateWithDuration:kPopupModalAnimationDuration animations:^{
-        backgroundView.alpha = 0.5f;
+        if (backgroundView) {
+            backgroundView.alpha = 0.5f;
+        }
         popupView.alpha = 1.0f;
     } completion:^(BOOL finished) {
         if (finished) {
@@ -450,7 +472,9 @@ static NSArray *_PopupControllerWithId (int pid) {
     UIView *popupView = (UIView *)popupInfo[4];
     
     [UIView animateWithDuration:kPopupModalAnimationDuration animations:^{
-        backgroundView.alpha = 0.0f;
+        if (backgroundView) {
+            backgroundView.alpha = 0.0f;
+        }
         popupView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         if (finished) {
