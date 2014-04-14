@@ -4,3 +4,4 @@ build/
 cuserdata
 *.xcworkspace
 .xcodeproj/ !*.xcodeproj/project.pbxproj
+/MJPopupViewControllerDemo/MJPopupViewControllerDemo.xcodeproj/xcuserdata/azeitler.xcuserdatad/xcdebugger/

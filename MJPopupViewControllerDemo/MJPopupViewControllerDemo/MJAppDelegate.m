@@ -9,6 +9,7 @@
 #import "MJAppDelegate.h"
 
 #import "MJViewController.h"
+#import "UIViewController+MJPopupViewController.h"
 
 @implementation MJAppDelegate
 
@@ -19,6 +20,11 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    [UIViewController setBackgroundViewClass:[UIToolbar class]];
+    [UIViewController setBackgroundViewProcessor:^(UIView *view) {
+        UIToolbar *toolbar = (UIToolbar *)view;
+        toolbar.barStyle = UIBarStyleBlackTranslucent;
+    }];
     self.viewController = [[MJViewController alloc] initWithNibName:@"MJViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];

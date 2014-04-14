@@ -32,7 +32,8 @@ __strong MJPopupViewStyle _popupStyle = ^(UIView *view) {
 };
 MJPopupViewAnimation _defaultAnimation = MJPopupViewAnimationSlideBottomBottom;
 Class _backgroundViewClass = nil;
-BOOL _useBackgroundView = NO;
+BOOL _useBackgroundView = YES;
+__strong MJPopupViewStyle _backgroundViewProcessor = NULL;
 BOOL _phoneCompatibilityMode = NO;
 
 static NSMutableDictionary *_popupControllers = nil;
@@ -94,6 +95,9 @@ static NSArray *_PopupControllerWithId (int pid) {
 + (void)setUseBackgroundView:(BOOL)useBackgroundView {
     _useBackgroundView = useBackgroundView;
 }
++ (void)setBackgroundViewProcessor:(MJPopupViewStyle)processor {
+    _backgroundViewProcessor = processor;
+}
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController {
     [self presentPopupViewController:popupViewController animationType:_defaultAnimation contentInteraction:MJPopupViewContentInteractionNone];
@@ -140,7 +144,7 @@ static NSArray *_PopupControllerWithId (int pid) {
     //NSAssert(popupInfo!=nil, @"popupInfo can't be nil!");
     UIView *sourceView = (UIView *)popupInfo[1];
     UIView *overlayView = (UIView *)popupInfo[2];
-    UIView *popupView = (UIView *)popupInfo[4];
+    UIView *popupView = (UIView *)popupInfo[3];
     //DDLogVerbose(@"dismissPopupViewController %d %@", popupId, popupInfo);
     
     if ([[self class] conformsToProtocol:@protocol(MJPopupViewDelegate)]) {
@@ -173,7 +177,7 @@ static NSArray *_PopupControllerWithId (int pid) {
 - (void)dismissPopupViewControllerWithSender:(UIButton *)sender
 {
     NSArray *popupInfo = _PopupControllerWithId(sender.tag);
-    MJPopupViewAnimation animation = (MJPopupViewAnimation)[((NSNumber *)popupInfo[5]) intValue];
+    MJPopupViewAnimation animation = (MJPopupViewAnimation)[((NSNumber *)popupInfo[4]) intValue];
     //DDLogVerbose(@"dismissPopupViewControllerWithSender %d %@", sender.tag, popupInfo);
     [self dismissPopupViewController:(UIViewController *)popupInfo[0] animationType:animation];
 }
@@ -207,21 +211,38 @@ static NSArray *_PopupControllerWithId (int pid) {
         if (!_backgroundViewClass) {
             _backgroundViewClass = [MJPopupBackgroundView class];
         }
-        NSAssert([_backgroundViewClass isKindOfClass:[UIView class]], @"_backgroundViewClass is not a subclass of UIView");
+        NSAssert([_backgroundViewClass isSubclassOfClass:[UIView class]], @"_backgroundViewClass is not a subclass of UIView");
         backgroundView = (UIView *)[[[_backgroundViewClass class] alloc] initWithFrame:sourceView.bounds];
         backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         backgroundView.backgroundColor = [UIColor clearColor];
         backgroundView.alpha = 0.0f;
+        if (_backgroundViewProcessor != NULL) {
+            _backgroundViewProcessor(backgroundView);
+        }
         [overlayView addSubview:backgroundView];
-        _backgroundViewClass = nil;
     }
 
     // register
-    NSArray *popupInfo = @[ popupViewController, sourceView, overlayView, backgroundView, popupView, @(animationType) ];
+    NSArray *popupInfo = nil;
+    if (backgroundView) {
+        popupInfo = @[
+                      popupViewController,  // 0
+                      sourceView,           // 1
+                      overlayView,          // 2
+                      popupView,            // 3
+                      @(animationType),     // 4
+                      backgroundView        // 5
+                      ];
+    }
+    else {
+        popupInfo = @[ popupViewController, sourceView, overlayView, popupView, @(animationType) ];
+    }
     int popupId = _AddPopupController(popupInfo);
     sourceView.tag = popupId;
     overlayView.tag = popupId;
-    backgroundView.tag = popupId;
+    if (backgroundView) {
+        backgroundView.tag = popupId;
+    }
     popupView.tag = popupId;
     //DDLogVerbose(@"presentPopupView %d %@", popupId, popupInfo);
     
@@ -288,8 +309,8 @@ static NSArray *_PopupControllerWithId (int pid) {
     __block UIViewController *backupedPopupViewController = popupViewController;
     int popupId = popupViewController.view.tag;
     NSArray *popupInfo = _PopupControllerWithId(popupId);
-    UIView *backgroundView = (UIView *)popupInfo[3];
-    UIView *popupView = (UIView *)popupInfo[4];
+    UIView *popupView = (UIView *)popupInfo[3];
+    UIView *backgroundView = [popupInfo count] > 5 ? (UIView *)popupInfo[5] : nil;
     
     // Generating Start and Stop Positions
     CGSize sourceSize = sourceView.bounds.size;
@@ -372,8 +393,8 @@ static NSArray *_PopupControllerWithId (int pid) {
 {
     __block int popupId = popupViewController.view.tag;
     NSArray *popupInfo = _PopupControllerWithId(popupId);
-    UIView *backgroundView = (UIView *)popupInfo[3];
-    UIView *popupView = (UIView *)popupInfo[4];
+    UIView *popupView = (UIView *)popupInfo[3];
+    UIView *backgroundView = [popupInfo count] > 5 ? (UIView *)popupInfo[5] : nil;
     //DDLogVerbose(@"slideViewOut %d %@", self.view.tag, popupInfo);
     
     // Generating Start and Stop Positions
@@ -437,8 +458,8 @@ static NSArray *_PopupControllerWithId (int pid) {
     __block UIViewController *backupedPopupViewController = popupViewController;
     int popupId = popupViewController.view.tag;
     NSArray *popupInfo = _PopupControllerWithId(popupId);
-    UIView *backgroundView = (UIView *)popupInfo[3];
-    UIView *popupView = (UIView *)popupInfo[4];
+    UIView *popupView = (UIView *)popupInfo[3];
+    UIView *backgroundView = [popupInfo count] > 5 ? (UIView *)popupInfo[5] : nil;
     
     // Generating Start and Stop Positions
     CGSize sourceSize = sourceView.bounds.size;
@@ -468,8 +489,8 @@ static NSArray *_PopupControllerWithId (int pid) {
 {
     __block int popupId = popupViewController.view.tag;
     NSArray *popupInfo = _PopupControllerWithId(popupId);
-    UIView *backgroundView = (UIView *)popupInfo[3];
-    UIView *popupView = (UIView *)popupInfo[4];
+    UIView *popupView = (UIView *)popupInfo[3];
+    UIView *backgroundView = [popupInfo count] > 5 ? (UIView *)popupInfo[5] : nil;
     
     [UIView animateWithDuration:kPopupModalAnimationDuration animations:^{
         if (backgroundView) {

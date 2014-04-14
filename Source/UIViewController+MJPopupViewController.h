@@ -41,10 +41,22 @@ extern MJPopupViewAnimation _defaultAnimation;
 
 /*! standard style applied to all popups, for example a set of instructions modifying the view's CALayer */
 + (void)setPopupStyle:(MJPopupViewStyle)style;
+
 /*! default animation to be used when none is passed */
 + (void)setDefaultAnimation:(MJPopupViewAnimation)animation;
+
 /*! makes sure the presented dialog does not exceed screen on iphone */
 + (void)setPhoneCompatibilityMode:(BOOL)state;
+
+/*! set the class that should be used for background, can also be nil
+ default is @ref MJPopupBackgroundView */
++ (void)setBackgroundViewClass:(Class)backgroundViewClass;
+
+/*! disable use of background view */
++ (void)setUseBackgroundView:(BOOL)useBackgroundView;
+
+/*! this block is processed for each new background view that is allocated */
++ (void)setBackgroundViewProcessor:(MJPopupViewStyle)processor;
 
 /*! present popup with standard animation (slide in and out from bottom) and standard content interaction MJPopupViewContentInteractionNone 
  @param popupViewController: instance of a UIViewController based class
