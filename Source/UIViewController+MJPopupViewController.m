@@ -33,6 +33,7 @@ __strong MJPopupViewStyle _popupStyle = ^(UIView *view) {
 MJPopupViewAnimation _defaultAnimation = MJPopupViewAnimationSlideBottomBottom;
 Class _backgroundViewClass = nil;
 BOOL _useBackgroundView = YES;
+BOOL _useOverlayView = YES;
 __strong MJPopupViewStyle _backgroundViewProcessor = NULL;
 BOOL _phoneCompatibilityMode = NO;
 
@@ -98,7 +99,9 @@ static NSArray *_PopupControllerWithId (int pid) {
 + (void)setBackgroundViewProcessor:(MJPopupViewStyle)processor {
     _backgroundViewProcessor = processor;
 }
-
++ (void)setUseOverlayView:(BOOL)useOverlayView {
+    _useOverlayView = useOverlayView;
+}
 - (void)presentPopupViewController:(UIViewController*)popupViewController {
     [self presentPopupViewController:popupViewController animationType:_defaultAnimation contentInteraction:MJPopupViewContentInteractionNone];
 }
@@ -204,6 +207,7 @@ static NSArray *_PopupControllerWithId (int pid) {
     UIView *overlayView = [[UIView alloc] initWithFrame:sourceView.bounds];
     overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     overlayView.backgroundColor = [UIColor clearColor];
+    overlayView.userInteractionEnabled = NO;
     
     // BackgroundView
     UIView *backgroundView = nil;
@@ -215,7 +219,7 @@ static NSArray *_PopupControllerWithId (int pid) {
         backgroundView = (UIView *)[[[_backgroundViewClass class] alloc] initWithFrame:sourceView.bounds];
         backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         backgroundView.backgroundColor = [UIColor clearColor];
-        backgroundView.alpha = 0.0f;
+        backgroundView.alpha = 0.0f ;
         if (_backgroundViewProcessor != NULL) {
             _backgroundViewProcessor(backgroundView);
         }
@@ -257,13 +261,18 @@ static NSArray *_PopupControllerWithId (int pid) {
         [overlayView addSubview:dismissButton];
         dismissButton.tag = popupId;
     }
-    else {
-        popupView.userInteractionEnabled = NO;
-    }
     
     popupView.alpha = 0.0f;
-    [overlayView addSubview:popupView];
-    [sourceView addSubview:overlayView];
+    
+    if (_useOverlayView) {
+        // common setting
+        [overlayView addSubview:popupView];
+        [sourceView addSubview:overlayView];
+    }else{
+        // popupview as sidemenu
+        [sourceView addSubview:popupView];
+    }
+
     
     // Make the Popup Clickable
     UIButton * dismissButton2 = nil;
