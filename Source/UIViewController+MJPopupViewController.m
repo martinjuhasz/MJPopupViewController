@@ -207,7 +207,7 @@ static NSArray *_PopupControllerWithId (int pid) {
     UIView *overlayView = [[UIView alloc] initWithFrame:sourceView.bounds];
     overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     overlayView.backgroundColor = [UIColor clearColor];
-    overlayView.userInteractionEnabled = NO;
+    overlayView.userInteractionEnabled = _useOverlayView;
     
     // BackgroundView
     UIView *backgroundView = nil;
@@ -264,11 +264,14 @@ static NSArray *_PopupControllerWithId (int pid) {
     
     popupView.alpha = 0.0f;
     
-    if (_useOverlayView) {
+    if (_useOverlayView)
+    {
         // common setting
         [overlayView addSubview:popupView];
         [sourceView addSubview:overlayView];
-    }else{
+    }
+    else
+    {
         // popupview as sidemenu
         [sourceView addSubview:popupView];
     }
