@@ -8,18 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MJSecondPopupDelegate;
-
-
 @interface MJSecondDetailViewController : UIViewController
 
-@property (assign, nonatomic) id <MJSecondPopupDelegate>delegate;
-
-@end
-
-
-
-@protocol MJSecondPopupDelegate<NSObject>
-@optional
-- (void)cancelButtonClicked:(MJSecondDetailViewController*)secondDetailViewController;
 @end

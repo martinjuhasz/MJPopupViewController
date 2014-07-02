@@ -13,6 +13,7 @@
 
 #define kPopupModalAnimationDuration 0.35
 #define kMJPopupViewController @"kMJPopupViewController"
+#define kMJPopupingViewController @"kMJPopupingViewController"
 #define kMJPopupBackgroundView @"kMJPopupBackgroundView"
 #define kMJSourceViewTag 23941
 #define kMJPopupViewTag 23942
@@ -42,6 +43,14 @@ static void * const keypath = (void*)&keypath;
     
 }
 
+- (UIViewController *)mj_popupingViewController {
+    return objc_getAssociatedObject(self, kMJPopupingViewController);
+}
+
+- (void)setMj_popupingViewController:(UIViewController *)mj_popupingViewController {
+    objc_setAssociatedObject(self, kMJPopupingViewController, mj_popupingViewController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (MJPopupBackgroundView*)mj_popupBackgroundView {
     return objc_getAssociatedObject(self, kMJPopupBackgroundView);
 }
@@ -54,6 +63,7 @@ static void * const keypath = (void*)&keypath;
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed
 {
     self.mj_popupViewController = popupViewController;
+    popupViewController.mj_popupingViewController = self;
     [self presentPopupView:popupViewController.view animationType:animationType dismissed:dismissed];
 }
 
@@ -68,6 +78,8 @@ static void * const keypath = (void*)&keypath;
     UIView *popupView = [sourceView viewWithTag:kMJPopupViewTag];
     UIView *overlayView = [sourceView viewWithTag:kMJOverlayViewTag];
     
+    UIViewController *popupingViewController = self.mj_popupingViewController ?: self;
+    
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
@@ -77,11 +89,11 @@ static void * const keypath = (void*)&keypath;
         case MJPopupViewAnimationSlideLeftRight:
         case MJPopupViewAnimationSlideRightLeft:
         case MJPopupViewAnimationSlideRightRight:
-            [self slideViewOut:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
+            [popupingViewController slideViewOut:popupView sourceView:sourceView overlayView:overlayView withAnimationType:animationType];
             break;
             
         default:
-            [self fadeViewOut:popupView sourceView:sourceView overlayView:overlayView];
+            [popupingViewController fadeViewOut:popupView sourceView:sourceView overlayView:overlayView];
             break;
     }
 }
@@ -163,7 +175,7 @@ static void * const keypath = (void*)&keypath;
 }
 
 -(UIView*)topView {
-    UIViewController *recentView = self;
+    UIViewController *recentView = self.mj_popupingViewController ?: self;
     
     while (recentView.parentViewController != nil) {
         recentView = recentView.parentViewController;
