@@ -158,7 +158,6 @@ static void * const keypath = (void*)&keypath;
             [self fadeViewIn:popupView sourceView:sourceView overlayView:overlayView];
             break;
     }
-    
     [self setDismissedCallback:dismissed];
 }
 
@@ -305,8 +304,9 @@ static void * const keypath = (void*)&keypath;
         id dismissed = [self dismissedCallback];
         if (dismissed != nil)
         {
-            ((void(^)(void))dismissed)();
             [self setDismissedCallback:nil];
+            ((void(^)(void))dismissed)();
+
         }
     }];
 }
@@ -351,8 +351,9 @@ static void * const keypath = (void*)&keypath;
         id dismissed = [self dismissedCallback];
         if (dismissed != nil)
         {
-            ((void(^)(void))dismissed)();
             [self setDismissedCallback:nil];
+            ((void(^)(void))dismissed)();
+
         }
     }];
 }
