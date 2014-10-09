@@ -53,6 +53,7 @@ static void * const keypath = (void*)&keypath;
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed
 {
+    [self dismissPopupViewControllerWithanimationTypeIfPresent:animationType];
     self.mj_popupViewController = popupViewController;
     [self presentPopupView:popupViewController.view animationType:animationType dismissed:dismissed];
 }
@@ -60,6 +61,16 @@ static void * const keypath = (void*)&keypath;
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType
 {
     [self presentPopupViewController:popupViewController animationType:animationType dismissed:nil];
+}
+
+- (void)dismissPopupViewControllerWithanimationTypeIfPresent:(MJPopupViewAnimation)animationType
+{
+    UIView *sourceView = [self topView];
+    UIView *popupView = [sourceView viewWithTag:kMJPopupViewTag];
+    UIView *overlayView = [sourceView viewWithTag:kMJOverlayViewTag];
+    if (popupView!=nil && overlayView!=nil) {
+        [self dismissPopupViewControllerWithanimationTypeIfPresent:animationType];
+    }
 }
 
 - (void)dismissPopupViewControllerWithanimationType:(MJPopupViewAnimation)animationType
