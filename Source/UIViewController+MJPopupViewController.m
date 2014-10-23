@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MJPopupBackgroundView.h"
 #import <objc/runtime.h>
+#import "ConstantValues.h"
+#import "NSMutableArray+QueueAddition.h"
 
 #define kPopupModalAnimationDuration 0.35
 #define kMJPopupViewController @"kMJPopupViewController"
@@ -31,6 +33,8 @@ static NSString *MJPopupViewDismissedKey = @"MJPopupViewDismissed";
 
 @implementation UIViewController (MJPopupViewController)
 
+Boolean popupShown;
+NSMutableArray *popupQueue;
 static void * const keypath = (void*)&keypath;
 
 - (UIViewController*)mj_popupViewController {
@@ -51,11 +55,27 @@ static void * const keypath = (void*)&keypath;
     
 }
 
-- (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed
+- (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed;{
+    [self presentPopupViewController:popupViewController animationType:animationType dismissed:dismissed backgroundActive:true];
+}
+
+
+- (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(Boolean*)backgroundActive
 {
 //    [self dismissPopupViewControllerWithanimationTypeIfPresent:animationType];
+    if (popupShown==true) {
+        if(popupQueue==nil){
+            popupQueue = [[NSMutableArray alloc] init];
+        }
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        [dict setObject:popupViewController forKey:@"viewController"];
+        [dict setObject:[NSNumber numberWithInt:animationType] forKey:@"animationType"];
+        [dict setObject:dismissed forKey:@"dismissed"];
+        [popupQueue enqueue:dict];
+        return;
+    }
     self.mj_popupViewController = popupViewController;
-    [self presentPopupView:popupViewController.view animationType:animationType dismissed:dismissed];
+    [self presentPopupView:popupViewController.view animationType:animationType dismissed:dismissed backgroundActive:backgroundActive];
 }
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType
@@ -95,6 +115,7 @@ static void * const keypath = (void*)&keypath;
             [self fadeViewOut:popupView sourceView:sourceView overlayView:overlayView];
             break;
     }
+    popupShown = false;
 }
 
 
@@ -108,13 +129,13 @@ static void * const keypath = (void*)&keypath;
     [self presentPopupView:popupView animationType:animationType dismissed:nil];
 }
 
-- (void)presentPopupView:(UIView*)popupView animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed
-{
+- (void)presentPopupView:(UIView*)popupView animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(Boolean*)backgroundActive{
+    
+    popupShown=true;
     UIView *sourceView = [self topView];
     sourceView.tag = kMJSourceViewTag;
     popupView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
     popupView.tag = kMJPopupViewTag;
-    
     // check if source view controller is not in destination
     if ([sourceView.subviews containsObject:popupView]) return;
     
@@ -141,17 +162,21 @@ static void * const keypath = (void*)&keypath;
     [overlayView addSubview:self.mj_popupBackgroundView];
     
     // Make the Background Clickable
+    
     UIButton * dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
     dismissButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     dismissButton.backgroundColor = [UIColor clearColor];
     dismissButton.frame = sourceView.bounds;
+    
     [overlayView addSubview:dismissButton];
+    if (backgroundActive) {
+        [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     popupView.alpha = 0.0f;
     [overlayView addSubview:popupView];
     [sourceView addSubview:overlayView];
     
-    [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
@@ -170,6 +195,13 @@ static void * const keypath = (void*)&keypath;
             break;
     }
     [self setDismissedCallback:dismissed];
+
+}
+
+
+- (void)presentPopupView:(UIView*)popupView animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed;
+{
+    [self presentPopupView:popupView animationType:animationType dismissed:dismissed backgroundActive:TRUE];
 }
 
 -(UIView*)topView {
@@ -317,7 +349,11 @@ static void * const keypath = (void*)&keypath;
         {
             [self setDismissedCallback:nil];
             ((void(^)(void))dismissed)();
-
+            if ([popupQueue count]!=0) {
+                NSMutableDictionary *dict = [popupQueue dequeue];
+                [self presentPopupViewController:[dict objectForKey:@"viewController"] animationType:[dict objectForKey:@"animationType"] dismissed:[dict objectForKey:@"dismissed"]];
+                
+            }
         }
     }];
 }
