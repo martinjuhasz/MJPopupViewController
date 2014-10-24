@@ -21,7 +21,7 @@
 #define kMJOverlayViewTag 23945
 
 @interface UIViewController (MJPopupViewControllerPrivate)
-- (UIView*)topView;
+
 - (void)presentPopupView:(UIView*)popupView;
 @end
 
@@ -206,7 +206,6 @@ static void * const keypath = (void*)&keypath;
 
 -(UIView*)topView {
     UIViewController *recentView = self;
-    
     while (recentView.parentViewController != nil) {
         recentView = recentView.parentViewController;
     }
