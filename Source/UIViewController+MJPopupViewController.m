@@ -62,7 +62,6 @@ static void * const keypath = (void*)&keypath;
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(Boolean*)backgroundActive
 {
-//    [self dismissPopupViewControllerWithanimationTypeIfPresent:animationType];
     if (popupShown==true) {
         if(popupQueue==nil){
             popupQueue = [[NSMutableArray alloc] init];
