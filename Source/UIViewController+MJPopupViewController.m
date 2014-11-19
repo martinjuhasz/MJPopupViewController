@@ -12,6 +12,7 @@
 #import <objc/runtime.h>
 #import "ConstantValues.h"
 #import "NSMutableArray+QueueAddition.h"
+#import "Logging.h"
 
 #define kPopupModalAnimationDuration 0.35
 #define kMJPopupViewController @"kMJPopupViewController"
@@ -71,6 +72,7 @@ static void * const keypath = (void*)&keypath;
         [dict setObject:[NSNumber numberWithInt:animationType] forKey:@"animationType"];
         [dict setObject:dismissed forKey:@"dismissed"];
         [popupQueue enqueue:dict];
+        ENInfo(@"adding view to queue");
         return;
     }
     self.mj_popupViewController = popupViewController;
