@@ -35,5 +35,6 @@ typedef enum {
 - (void)dismissPopupViewControllerWithanimationType:(MJPopupViewAnimation)animationType;
 - (void)dismissPopupViewControllerWithanimationTypeIfPresent:(MJPopupViewAnimation)animationType;
 - (UIView*)topView;
+-(void) clearPopupQueue;
 
 @end

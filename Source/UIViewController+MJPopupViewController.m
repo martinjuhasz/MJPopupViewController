@@ -60,6 +60,10 @@ static void * const keypath = (void*)&keypath;
     [self presentPopupViewController:popupViewController animationType:animationType dismissed:dismissed backgroundActive:true];
 }
 
+-(void) clearPopupQueue;{
+    popupShown=false;
+    [popupQueue removeAllObjects];
+}
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(Boolean*)backgroundActive
 {
