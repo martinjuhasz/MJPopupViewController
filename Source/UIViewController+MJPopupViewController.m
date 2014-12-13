@@ -74,7 +74,9 @@ static void * const keypath = (void*)&keypath;
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         [dict setObject:popupViewController forKey:@"viewController"];
         [dict setObject:[NSNumber numberWithInt:animationType] forKey:@"animationType"];
-        [dict setObject:dismissed forKey:@"dismissed"];
+        if (dismissed != nil) {
+            [dict setObject:dismissed forKey:@"dismissed"];
+        }
         [popupQueue enqueue:dict];
         ENInfo(@"adding view to queue");
         return;
@@ -355,7 +357,11 @@ static void * const keypath = (void*)&keypath;
             ((void(^)(void))dismissed)();
             if ([popupQueue count]!=0) {
                 NSMutableDictionary *dict = [popupQueue dequeue];
-                [self presentPopupViewController:[dict objectForKey:@"viewController"] animationType:[dict objectForKey:@"animationType"] dismissed:[dict objectForKey:@"dismissed"]];
+                id dismissed = nil;
+                if ([dict objectForKey:@"dismissed"]) {
+                    dismissed = [dict objectForKey:@"dismissed"];
+                }
+                [self presentPopupViewController:[dict objectForKey:@"viewController"] animationType:[[dict objectForKey:@"animationType"] intValue]dismissed:dismissed];
                 
             }
         }
