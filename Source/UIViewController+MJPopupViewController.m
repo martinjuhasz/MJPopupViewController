@@ -7,12 +7,7 @@
 //
 
 #import "UIViewController+MJPopupViewController.h"
-#import <QuartzCore/QuartzCore.h>
-#import "MJPopupBackgroundView.h"
-#import <objc/runtime.h>
-#import "ConstantValues.h"
-#import "NSMutableArray+QueueAddition.h"
-#import "Logging.h"
+
 
 #define kPopupModalAnimationDuration 0.35
 #define kMJPopupViewController @"kMJPopupViewController"

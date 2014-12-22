@@ -7,6 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+#import "MJPopupBackgroundView.h"
+#import <objc/runtime.h>
+#import "ConstantValues.h"
+#import "NSMutableArray+QueueAddition.h"
+#import "Logging.h"
 
 @class MJPopupBackgroundView;
 
