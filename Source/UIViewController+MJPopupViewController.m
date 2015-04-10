@@ -14,6 +14,7 @@
 #define kPopupModalAnimationDuration 0.35
 #define kMJPopupViewController @"kMJPopupViewController"
 #define kMJPopupBackgroundView @"kMJPopupBackgroundView"
+#define kKeepOnTouchOutside @"kKeepOnTouchOutside"
 #define kMJSourceViewTag 23941
 #define kMJPopupViewTag 23942
 #define kMJOverlayViewTag 23945
@@ -32,6 +33,17 @@ static NSString *MJPopupViewDismissedKey = @"MJPopupViewDismissed";
 @implementation UIViewController (MJPopupViewController)
 
 static void * const keypath = (void*)&keypath;
+
+- (BOOL)keepOnTouchOutside{
+    NSNumber *val = objc_getAssociatedObject(self, kKeepOnTouchOutside);
+    if(!val)
+        return NO;
+    return [val boolValue];
+}
+
+- (void)setKeepOnTouchOutside:(BOOL)keepOnTouchOutside{
+    objc_setAssociatedObject(self, kKeepOnTouchOutside, [NSNumber numberWithBool:keepOnTouchOutside], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (UIViewController*)mj_popupViewController {
     return objc_getAssociatedObject(self, kMJPopupViewController);
@@ -140,7 +152,8 @@ static void * const keypath = (void*)&keypath;
     [overlayView addSubview:popupView];
     [sourceView addSubview:overlayView];
     
-    [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
+    if(!self.keepOnTouchOutside)
+        [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
