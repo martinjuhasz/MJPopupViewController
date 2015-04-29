@@ -14,6 +14,7 @@
 #define kPopupModalAnimationDuration 0.35
 #define kMJPopupViewController @"kMJPopupViewController"
 #define kMJPopupBackgroundView @"kMJPopupBackgroundView"
+#define kMJIgnoreTouchOutside @"kMJIgnoreTouchOutside"
 #define kMJSourceViewTag 23941
 #define kMJPopupViewTag 23942
 #define kMJOverlayViewTag 23945
@@ -49,6 +50,22 @@ static void * const keypath = (void*)&keypath;
 - (void)setMj_popupBackgroundView:(MJPopupBackgroundView *)mj_popupBackgroundView {
     objc_setAssociatedObject(self, kMJPopupBackgroundView, mj_popupBackgroundView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
+}
+
+- (BOOL)mj_ignoreTouchOutside
+{
+    id value = objc_getAssociatedObject(self, kMJIgnoreTouchOutside);
+    if (value == nil) {
+        return NO;
+    }
+    
+    return [value boolValue];
+}
+
+- (void)setMj_ignoreTouchOutside:(BOOL)mj_ignoreTouchOutside
+{
+    id value = @(mj_ignoreTouchOutside);
+    objc_setAssociatedObject(self, kMJIgnoreTouchOutside, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed
@@ -173,6 +190,10 @@ static void * const keypath = (void*)&keypath;
 
 - (void)dismissPopupViewControllerWithanimation:(id)sender
 {
+    if (self.mj_popupViewController.mj_ignoreTouchOutside) {
+        return;
+    }
+    
     if ([sender isKindOfClass:[UIButton class]]) {
         UIButton* dismissButton = sender;
         switch (dismissButton.tag) {
