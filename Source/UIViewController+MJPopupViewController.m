@@ -117,6 +117,9 @@ static void * const keypath = (void*)&keypath;
             [self fadeViewOut:popupView sourceView:sourceView overlayView:overlayView];
             break;
     }
+}
+
+-(void) unsetPopupShown;{
     popupShown = false;
 }
 
@@ -344,12 +347,12 @@ static void * const keypath = (void*)&keypath;
         [overlayView removeFromSuperview];
         [self.mj_popupViewController viewDidDisappear:NO];
         self.mj_popupViewController = nil;
-        
         id dismissed = [self dismissedCallback];
         if (dismissed != nil)
         {
             [self setDismissedCallback:nil];
             ((void(^)(void))dismissed)();
+            [self unsetPopupShown];
             if ([popupQueue count]!=0) {
                 NSMutableDictionary *dict = [popupQueue dequeue];
                 id dismissed = nil;
@@ -357,9 +360,9 @@ static void * const keypath = (void*)&keypath;
                     dismissed = [dict objectForKey:@"dismissed"];
                 }
                 [self presentPopupViewController:[dict objectForKey:@"viewController"] animationType:[[dict objectForKey:@"animationType"] intValue]dismissed:dismissed];
-                
             }
         }
+
     }];
 }
 
@@ -407,6 +410,7 @@ static void * const keypath = (void*)&keypath;
             ((void(^)(void))dismissed)();
 
         }
+        [self unsetPopupShown];
     }];
 }
 
