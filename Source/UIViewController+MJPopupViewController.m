@@ -59,6 +59,10 @@ static void * const keypath = (void*)&keypath;
     popupShown=false;
     [popupQueue removeAllObjects];
 }
+-(void) clearPopupQueueAndRemovePopup;{
+    [self dismissPopupViewControllerWithanimationType:ANIMATIONSTYLE];
+    [self clearPopupQueue];
+}
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(Boolean*)backgroundActive
 {
@@ -100,6 +104,10 @@ static void * const keypath = (void*)&keypath;
     UIView *sourceView = [self topView];
     UIView *popupView = [sourceView viewWithTag:kMJPopupViewTag];
     UIView *overlayView = [sourceView viewWithTag:kMJOverlayViewTag];
+    
+    if (popupView == nil) {
+        return;
+    }
     
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
