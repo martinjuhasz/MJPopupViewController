@@ -64,7 +64,7 @@ static void * const keypath = (void*)&keypath;
     [self clearPopupQueue];
 }
 
-- (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(Boolean*)backgroundActive
+- (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(BOOL)backgroundActive
 {
     if (popupShown==true) {
         if(popupQueue==nil){
@@ -142,7 +142,7 @@ static void * const keypath = (void*)&keypath;
     [self presentPopupView:popupView animationType:animationType dismissed:nil];
 }
 
-- (void)presentPopupView:(UIView*)popupView animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(Boolean*)backgroundActive{
+- (void)presentPopupView:(UIView*)popupView animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(BOOL)backgroundActive{
     
     popupShown=true;
     UIView *sourceView = [self topView];
@@ -238,7 +238,7 @@ static void * const keypath = (void*)&keypath;
             case MJPopupViewAnimationSlideLeftRight:
             case MJPopupViewAnimationSlideRightLeft:
             case MJPopupViewAnimationSlideRightRight:
-                [self dismissPopupViewControllerWithanimationType:dismissButton.tag];
+                [self dismissPopupViewControllerWithanimationType:(int)dismissButton.tag];
                 break;
             default:
                 [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
