@@ -1,10 +1,11 @@
-# MJPopupViewController
+# MJPopupViewController (deprecated)
 
 A UIViewController Category to display a ViewController as a popup with different transition effects.
 
 Written by [Martin Juhasz](http://martinjuhasz.de), June 2012.
 
-**Note: You should no longer use this category since it's outdated and there are more modern approaches for facing this problem.** (f.e. [SLPopupViewController](https://github.com/sunlight3d/SLPopupViewController))
+
+**Note: You should no longer use this category since it's outdated and there are more modern approaches for facing this problem.**
 
 
 ## Installation
