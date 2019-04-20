@@ -11,7 +11,7 @@
 #import "MJDetailViewController.h"
 #import "MJSecondDetailViewController.h"
 
-@interface MJViewController () <MJSecondPopupDelegate>{
+@interface MJViewController () {
     NSArray *actions;
     NSArray *animations;
 }
@@ -175,7 +175,6 @@
             
         default: {
             MJSecondDetailViewController *secondDetailViewController = [[MJSecondDetailViewController alloc] initWithNibName:@"MJSecondDetailViewController" bundle:nil];
-            secondDetailViewController.delegate = self;
             [self presentPopupViewController:secondDetailViewController animationType:MJPopupViewAnimationFade];
             
         }
