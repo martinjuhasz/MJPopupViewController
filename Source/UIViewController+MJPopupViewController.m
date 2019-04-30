@@ -68,6 +68,10 @@ static void * const keypath = (void*)&keypath;
     UIView *popupView = [sourceView viewWithTag:kMJPopupViewTag];
     UIView *overlayView = [sourceView viewWithTag:kMJOverlayViewTag];
     
+    if ((sourceView == nil) || (popupView == nil) || (overlayView == nil)) {
+        return;
+    }
+    
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:
