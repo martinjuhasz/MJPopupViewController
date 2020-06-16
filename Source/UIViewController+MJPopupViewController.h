@@ -7,6 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+#import "MJPopupBackgroundView.h"
+#import <objc/runtime.h>
+#import "ConstantValues.h"
+#import "NSMutableArray+QueueAddition.h"
+#import "Logging.h"
 
 @class MJPopupBackgroundView;
 
@@ -29,6 +35,13 @@ typedef enum {
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType;
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed;
+- (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(BOOL)backgroundActive;
+
+- (void)presentPopupView:(UIView*)popupView animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed backgroundActive:(BOOL)backgroundActive;
 - (void)dismissPopupViewControllerWithanimationType:(MJPopupViewAnimation)animationType;
+- (void)dismissPopupViewControllerWithanimationTypeIfPresent:(MJPopupViewAnimation)animationType;
+- (UIView*)topView;
+-(void) clearPopupQueue;
+-(void) clearPopupQueueAndRemovePopup;
 
 @end
